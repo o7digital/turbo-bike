@@ -257,6 +257,10 @@
             text-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
         }
 
+        .hero-title span {
+            color: var(--primary);
+        }
+
         .hero-description {
             max-width: 36rem;
             margin-bottom: 2rem;
@@ -1151,12 +1155,11 @@
         <div class="hero-slide active" data-hero-slide style="--hero-image: url('https://divertibici.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fhome%2Fdemo16%2Fbici1.jpg&w=3840&q=75');">
             <div class="container hero-inner">
                 <div class="hero-copy">
-                    <div class="hero-eyebrow">Nouveaux modèles</div>
-                    <h1 class="hero-title">Adventure Rides 2024</h1>
-                    <p class="hero-description">Le hero reprend l’esprit de divertibici: grand visuel immersif, contraste fort et appels à l’action directs vers le catalogue et les composants.</p>
+                    <div class="hero-eyebrow">TurboBike Premium</div>
+                    <h1 class="hero-title">Potencia tu <span>Aventura</span></h1>
+                    <p class="hero-description">Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
                     <div class="hero-actions">
-                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button primary">Shop Now</a>
-                        <a href="#motores" onclick="window.turboBikeApp.scrollToSection('motores'); return false;" class="hero-button secondary">View More</a>
+                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button secondary">Ver Catálogo</a>
                     </div>
                 </div>
             </div>
@@ -1164,12 +1167,11 @@
         <div class="hero-slide" data-hero-slide style="--hero-image: url('https://divertibici.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fhome%2Fdemo16%2Fbici2.jpg&w=3840&q=75');">
             <div class="container hero-inner">
                 <div class="hero-copy">
-                    <div class="hero-eyebrow">Style &amp; Performance</div>
-                    <h1 class="hero-title">Urban Design Series</h1>
-                    <p class="hero-description">Même structure que le site source, adaptée ici pour orienter vers la sélection TurboBike sans dépendre du slider React original.</p>
+                    <div class="hero-eyebrow">TurboBike Premium</div>
+                    <h1 class="hero-title">Potencia tu <span>Aventura</span></h1>
+                    <p class="hero-description">Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
                     <div class="hero-actions">
-                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button primary">Shop Now</a>
-                        <a href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;" class="hero-button secondary">View More</a>
+                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button secondary">Ver Catálogo</a>
                     </div>
                 </div>
             </div>
@@ -1179,8 +1181,8 @@
             <button type="button" class="hero-arrow" onclick="window.turboBikeApp.nextHeroSlide()" aria-label="Slide suivante">›</button>
         </div>
         <div class="hero-dots" aria-label="Sélection des slides">
-            <button type="button" class="hero-dot active" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(0)" aria-label="Afficher Adventure Rides 2024" aria-pressed="true"></button>
-            <button type="button" class="hero-dot" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(1)" aria-label="Afficher Urban Design Series" aria-pressed="false"></button>
+            <button type="button" class="hero-dot active" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(0)" aria-label="Afficher le hero 1" aria-pressed="true"></button>
+            <button type="button" class="hero-dot" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(1)" aria-label="Afficher le hero 2" aria-pressed="false"></button>
         </div>
     </section>
 
