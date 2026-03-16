@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurboBike - Bicicletas Eléctricas Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -158,25 +158,81 @@
         }
 
         .hero {
-            background:
-                linear-gradient(rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.9)),
-                url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1920&q=80') center/cover;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
             position: relative;
+            min-height: 88vh;
+            color: white;
             overflow: hidden;
+            background: #0a1118;
         }
 
-        .hero-content {
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.03);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(90deg, rgba(7, 15, 22, 0.88) 0%, rgba(7, 15, 22, 0.55) 45%, rgba(7, 15, 22, 0.2) 100%),
+                var(--hero-image);
+            background-position: center;
+            background-size: cover;
+            transform: scale(1.02);
+        }
+
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 25%, rgba(255, 107, 0, 0.28), transparent 28%),
+                linear-gradient(180deg, rgba(6, 10, 18, 0.1), rgba(6, 10, 18, 0.5));
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .hero-inner {
             position: relative;
-            z-index: 1;
-            max-width: 800px;
-            padding: 0 2rem;
-            animation: fadeInUp 1s ease-out;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-copy {
+            max-width: 640px;
+            padding: 8rem 0 7rem;
+            animation: fadeInUp 0.9s ease-out;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 52px;
+            height: 2px;
+            background: var(--primary);
+            box-shadow: 0 0 18px rgba(255, 107, 0, 0.65);
         }
 
         @keyframes fadeInUp {
@@ -190,44 +246,120 @@
             }
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
+        .hero-title {
             margin-bottom: 1rem;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Exo 2', sans-serif;
+            font-size: clamp(3.2rem, 7vw, 5.8rem);
+            font-weight: 800;
+            line-height: 0.94;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
         }
 
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
+        .hero-description {
+            max-width: 36rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.84);
         }
 
-        .cta-button {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            padding: 1rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.28);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
-            border: 2px solid var(--primary);
-            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: white;
+            backdrop-filter: blur(12px);
+            transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
         }
 
-        .cta-button:hover {
-            background: transparent;
-            color: var(--primary);
+        .hero-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+            border-color: white;
+        }
+
+        .hero-button.primary {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-button.secondary {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 14px 30px rgba(255, 107, 0, 0.28);
+        }
+
+        .hero-button.secondary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .hero-nav {
+            position: absolute;
+            inset: 50% 2rem auto;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .hero-arrow {
+            pointer-events: auto;
+            width: 54px;
+            height: 54px;
+            border: 1px solid rgba(255, 255, 255, 0.34);
+            background: rgba(6, 12, 18, 0.24);
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .hero-arrow:hover {
+            background: rgba(255, 107, 0, 0.9);
+            border-color: rgba(255, 107, 0, 0.95);
+            transform: scale(1.04);
+        }
+
+        .hero-dots {
+            position: absolute;
+            left: 50%;
+            bottom: 2rem;
+            z-index: 3;
+            display: flex;
+            gap: 0.75rem;
+            transform: translateX(-50%);
+        }
+
+        .hero-dot {
+            width: 12px;
+            height: 12px;
+            padding: 0;
+            border: none;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.34);
+            cursor: pointer;
+            transition: width 0.25s ease, background-color 0.25s ease;
+        }
+
+        .hero-dot.active {
+            width: 40px;
+            background: var(--primary);
         }
 
         .filters-section {
@@ -860,8 +992,36 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero {
+                min-height: 78vh;
+            }
+
+            .hero-copy {
+                padding: 7rem 0 6rem;
+            }
+
+            .hero-title {
+                font-size: 2.9rem;
+                line-height: 0.98;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-button {
+                width: 100%;
+            }
+
+            .hero-nav {
+                inset: auto 1rem 6.5rem;
+                transform: none;
+            }
+
+            .hero-arrow {
+                width: 48px;
+                height: 48px;
             }
 
             .products-grid,
@@ -987,11 +1147,40 @@
         </div>
     </header>
 
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h1>Potencia tu <span>Aventura</span></h1>
-            <p>Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
-            <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="cta-button">Ver Catálogo 2025</a>
+    <section class="hero" id="inicio" aria-label="Hero promocional TurboBike">
+        <div class="hero-slide active" data-hero-slide style="--hero-image: url('https://divertibici.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fhome%2Fdemo16%2Fbici1.jpg&w=3840&q=75');">
+            <div class="container hero-inner">
+                <div class="hero-copy">
+                    <div class="hero-eyebrow">Nouveaux modèles</div>
+                    <h1 class="hero-title">Adventure Rides 2024</h1>
+                    <p class="hero-description">Le hero reprend l’esprit de divertibici: grand visuel immersif, contraste fort et appels à l’action directs vers le catalogue et les composants.</p>
+                    <div class="hero-actions">
+                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button primary">Shop Now</a>
+                        <a href="#motores" onclick="window.turboBikeApp.scrollToSection('motores'); return false;" class="hero-button secondary">View More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slide" data-hero-slide style="--hero-image: url('https://divertibici.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fhome%2Fdemo16%2Fbici2.jpg&w=3840&q=75');">
+            <div class="container hero-inner">
+                <div class="hero-copy">
+                    <div class="hero-eyebrow">Style &amp; Performance</div>
+                    <h1 class="hero-title">Urban Design Series</h1>
+                    <p class="hero-description">Même structure que le site source, adaptée ici pour orienter vers la sélection TurboBike sans dépendre du slider React original.</p>
+                    <div class="hero-actions">
+                        <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button primary">Shop Now</a>
+                        <a href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;" class="hero-button secondary">View More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-nav" aria-label="Navigation du hero">
+            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.prevHeroSlide()" aria-label="Slide précédente">‹</button>
+            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.nextHeroSlide()" aria-label="Slide suivante">›</button>
+        </div>
+        <div class="hero-dots" aria-label="Sélection des slides">
+            <button type="button" class="hero-dot active" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(0)" aria-label="Afficher Adventure Rides 2024" aria-pressed="true"></button>
+            <button type="button" class="hero-dot" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(1)" aria-label="Afficher Urban Design Series" aria-pressed="false"></button>
         </div>
     </section>
 
@@ -1525,6 +1714,8 @@
 
                 let shoppingCart = [];
                 let currentPaymentMethod = null;
+                let currentHeroSlide = 0;
+                let heroAutoplayTimer = null;
                 let toastTimer = null;
 
                 const elements = {
@@ -1656,6 +1847,81 @@
                     if (section) {
                         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
+                }
+
+                function setHeroSlide(index) {
+                    const slides = document.querySelectorAll('[data-hero-slide]');
+                    const dots = document.querySelectorAll('[data-hero-dot]');
+
+                    if (!slides.length) {
+                        return;
+                    }
+
+                    currentHeroSlide = (index + slides.length) % slides.length;
+
+                    slides.forEach(function(slide, slideIndex) {
+                        slide.classList.toggle('active', slideIndex === currentHeroSlide);
+                    });
+
+                    dots.forEach(function(dot, dotIndex) {
+                        const isActive = dotIndex === currentHeroSlide;
+                        dot.classList.toggle('active', isActive);
+                        dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                    });
+                }
+
+                function stopHeroAutoplay() {
+                    if (!heroAutoplayTimer) {
+                        return;
+                    }
+
+                    clearInterval(heroAutoplayTimer);
+                    heroAutoplayTimer = null;
+                }
+
+                function startHeroAutoplay() {
+                    stopHeroAutoplay();
+
+                    if (document.querySelectorAll('[data-hero-slide]').length < 2) {
+                        return;
+                    }
+
+                    heroAutoplayTimer = setInterval(function() {
+                        setHeroSlide(currentHeroSlide + 1);
+                    }, 6000);
+                }
+
+                function restartHeroAutoplay() {
+                    startHeroAutoplay();
+                }
+
+                function nextHeroSlide() {
+                    setHeroSlide(currentHeroSlide + 1);
+                    restartHeroAutoplay();
+                }
+
+                function prevHeroSlide() {
+                    setHeroSlide(currentHeroSlide - 1);
+                    restartHeroAutoplay();
+                }
+
+                function goToHeroSlide(index) {
+                    setHeroSlide(index);
+                    restartHeroAutoplay();
+                }
+
+                function initHeroSlider() {
+                    const hero = document.querySelector('.hero');
+
+                    if (!hero) {
+                        return;
+                    }
+
+                    setHeroSlide(0);
+                    startHeroAutoplay();
+
+                    hero.addEventListener('mouseenter', stopHeroAutoplay);
+                    hero.addEventListener('mouseleave', startHeroAutoplay);
                 }
 
                 function renderProducts() {
@@ -2252,6 +2518,7 @@
                     elements.paymentForm = document.getElementById('paymentForm');
                     elements.toast = document.getElementById('toast');
 
+                    initHeroSlider();
                     renderProducts();
                     renderMotores();
                     renderBaterias();
@@ -2284,7 +2551,10 @@
                     copyBankData: copyBankData,
                     finishOrder: finishOrder,
                     showDetails: showDetails,
-                    replaceImageWithFallback: replaceImageWithFallback
+                    replaceImageWithFallback: replaceImageWithFallback,
+                    nextHeroSlide: nextHeroSlide,
+                    prevHeroSlide: prevHeroSlide,
+                    goToHeroSlide: goToHeroSlide
                 };
 
                 function safeInit() {
