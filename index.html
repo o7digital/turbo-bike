@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurboBike - Bicicletas Eléctricas Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #E55A00;
+            --secondary: #1A1A2E;
+            --accent: #16213E;
+            --light: #F5F5F7;
+            --text: #333333;
+            --text-light: #666666;
+            --success: #00C853;
+            --warning: #FFD600;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .animate-on-scroll.delay-1 { animation-delay: 0.1s; }
+        .animate-on-scroll.delay-2 { animation-delay: 0.2s; }
+        .animate-on-scroll.delay-3 { animation-delay: 0.3s; }
+        .animate-on-scroll.delay-4 { animation-delay: 0.4s; }
+        .animate-on-scroll.delay-5 { animation-delay: 0.5s; }
+        .animate-on-scroll.delay-6 { animation-delay: 0.6s; }
+
+        header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            background:
+                linear-gradient(rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.9)),
+                url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1920&q=80') center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+        }
+
+        .filters-section {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-group select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .clear-filters {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1.5rem;
+        }
+
+        .clear-filters:hover {
+            background: var(--primary);
+        }
+
+        .products-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .product-badge.new {
+            background: var(--success);
+        }
+
+        .product-badge.sale {
+            background: #FF1744;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-specs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .spec {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            background: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .spec-icon {
+            font-size: 1rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .original-price {
+            font-size: 1.1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-add-cart:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-details {
+            padding: 0.875rem 1rem;
+            background: var(--light);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-details:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .component-section {
+            padding: 4rem 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .component-section:nth-of-type(even) {
+            background: var(--light);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .component-image-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f8f8;
+            margin-bottom: 1rem;
+        }
+
+        .component-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .component-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .component-specs {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .component-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .component-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-component {
+            width: 100%;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-component:hover {
+            background: var(--primary);
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--secondary);
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .qty-btn {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .remove-item {
+            color: #FF1744;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 2px solid #eee;
+            background: var(--light);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #00B248;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1500;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+            animation: modalPop 0.3s;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: var(--secondary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(255, 107, 0, 0.05);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+        }
+
+        .payment-info h4 {
+            margin-bottom: 0.25rem;
+            color: var(--secondary);
+        }
+
+        .payment-info p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-confirm {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group select {
+                width: 100%;
+            }
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 4000;
+            animation: slideUpToast 0.3s;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        @keyframes slideUpToast {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 3rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .reference-box {
+            background: #fff3e0;
+            border: 2px dashed #ff9800;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .reference-number {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #e65100;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    ⚡ <span>Turbo</span>Bike
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio" onclick="window.turboBikeApp.scrollToSection('inicio'); return false;">Inicio</a></li>
+                        <li><a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;">Catálogo</a></li>
+                        <li><a href="#motores" onclick="window.turboBikeApp.scrollToSection('motores'); return false;">Motores</a></li>
+                        <li><a href="#baterias" onclick="window.turboBikeApp.scrollToSection('baterias'); return false;">Baterías</a></li>
+                        <li><a href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;">Accesorios</a></li>
+                    </ul>
+                </nav>
+                <div class="cart-icon" onclick="window.turboBikeApp.toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Potencia tu <span>Aventura</span></h1>
+            <p>Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
+            <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="cta-button">Ver Catálogo 2025</a>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Categoría</label>
+                    <select id="categoryFilter" onchange="window.turboBikeApp.filterProducts()">
+                        <option value="all">Todas las categorías</option>
+                        <option value="emtb-full">E-MTB Full Power</option>
+                        <option value="emtb-light">E-MTB Lightweight</option>
+                        <option value="urban">Urbanas / Commuter</option>
+                        <option value="gravel">Gravel / Road</option>
+                        <option value="cargo">Cargo</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Marca</label>
+                    <select id="brandFilter" onchange="window.turboBikeApp.filterProducts()">
+                        <option value="all">Todas las marcas</option>
+                        <option value="specialized">Specialized</option>
+                        <option value="trek">Trek</option>
+                        <option value="cannondale">Cannondale</option>
+                        <option value="cube">Cube</option>
+                        <option value="canyon">Canyon</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Precio</label>
+                    <select id="priceFilter" onchange="window.turboBikeApp.filterProducts()">
+                        <option value="all">Todos los precios</option>
+                        <option value="0-3000">$0 - $3,000</option>
+                        <option value="3000-6000">$3,000 - $6,000</option>
+                        <option value="6000+">Más de $6,000</option>
+                    </select>
+                </div>
+                <button class="clear-filters" onclick="window.turboBikeApp.clearFilters()">Limpiar Filtros</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section" id="catalogo">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>Catálogo 2024-2025</h2>
+                <p>Modelos reales con especificaciones técnicas verificadas</p>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <section class="component-section" id="motores">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>⚡ Motores</h2>
+                <p>Los mejores sistemas de asistencia eléctrica del mercado</p>
+            </div>
+            <div class="component-grid" id="motoresGrid"></div>
+        </div>
+    </section>
+
+    <section class="component-section" id="baterias">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>🔋 Baterías</h2>
+                <p>Autonomía y potencia para tus aventuras</p>
+            </div>
+            <div class="component-grid" id="bateriasGrid"></div>
+        </div>
+    </section>
+
+    <section class="component-section" id="accesorios">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>🛠️ Accesorios</h2>
+                <p>Complementos esenciales para tu e-bike</p>
+            </div>
+            <div class="component-grid" id="accesoriosGrid"></div>
+        </div>
+    </section>
+
+    <div class="overlay" id="overlay" onclick="window.turboBikeApp.setCartOpen(false)"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>🛒 Tu Carrito</h3>
+            <button class="close-cart" onclick="window.turboBikeApp.setCartOpen(false)">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Tu carrito está vacío</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="window.turboBikeApp.openPaymentModal()">Proceder al Pago</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="paymentOverlay" onclick="window.turboBikeApp.closePaymentModal()"></div>
+    <div class="modal" id="paymentModal">
+        <div class="modal-header">
+            <h2>Método de Pago</h2>
+            <button class="close-modal" onclick="window.turboBikeApp.closePaymentModal()">✕</button>
+        </div>
+
+        <div class="payment-methods">
+            <div class="payment-method" data-payment-method="paypal" onclick="window.turboBikeApp.selectPayment('paypal', this)">
+                <div class="payment-icon">💳</div>
+                <div class="payment-info">
+                    <h4>PayPal</h4>
+                    <p>Pago seguro con tu cuenta PayPal</p>
+                </div>
+            </div>
+
+            <div class="payment-method" data-payment-method="oxxo" onclick="window.turboBikeApp.selectPayment('oxxo', this)">
+                <div class="payment-icon">🏪</div>
+                <div class="payment-info">
+                    <h4>OXXO Pay</h4>
+                    <p>Paga en efectivo en cualquier tienda OXXO</p>
+                </div>
+            </div>
+
+            <div class="payment-method" data-payment-method="transfer" onclick="window.turboBikeApp.selectPayment('transfer', this)">
+                <div class="payment-icon">🏦</div>
+                <div class="payment-info">
+                    <h4>Transferencia Bancaria</h4>
+                    <p>Transferencia SPEI directa</p>
+                </div>
+            </div>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" id="customerName" placeholder="Jorge Armando Lozano Martínez" required>
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="customerEmail" placeholder="jlm3967@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" id="customerPhone" placeholder="55 1234 5678" required>
+            </div>
+            <button type="button" class="btn-confirm" onclick="window.turboBikeApp.processPayment()">Confirmar Pedido</button>
+        </form>
+    </div>
+
+    <div class="toast" id="toast">✅ Producto agregado al carrito</div>
+
+    <script>
+        if (window.turboBikeInitialized) {
+            console.log('TurboBike ya está inicializado, ignorando...');
+        } else {
+            (function() {
+                'use strict';
+
+                const inventory = [
+                    {
+                        id: 1,
+                        name: 'Specialized Turbo Levo Gen 4',
+                        category: 'emtb-full',
+                        brand: 'specialized',
+                        price: 8500,
+                        originalPrice: 9200,
+                        image: 'https://dunbarcycles.com/cdn/shop/files/2024-specialized-s-works-turbo-levo-t-type.png?v=1719607209&width=2048',
+                        badge: 'sale',
+                        motor: 'Brose 3.1',
+                        battery: '700Wh',
+                        torque: '90Nm',
+                        weight: '22.5kg',
+                        description: 'La referencia mundial en e-MTB. Nuevo motor más suave, silencioso y potente.'
+                    },
+                    {
+                        id: 2,
+                        name: 'Specialized Levo SL',
+                        category: 'emtb-light',
+                        brand: 'specialized',
+                        price: 7200,
+                        image: 'https://d36myxw5t262l6.cloudfront.net/wp-content/uploads/sites/10/2023/05/15151554/96824-50_LEVO-SL-COMP-ALLOY-CHAR-SILDST-BLK_HERO.webp',
+                        badge: 'new',
+                        motor: 'SL 1.2',
+                        battery: '320Wh',
+                        torque: '50Nm',
+                        weight: '17.8kg',
+                        description: 'La mejor e-MTB ligera del mercado. Sensación de bicicleta tradicional con asistencia natural.'
+                    },
+                    {
+                        id: 3,
+                        name: 'Trek Rail 9.9 XX1 AXS',
+                        category: 'emtb-full',
+                        brand: 'trek',
+                        price: 12500,
+                        image: 'https://www.tritoncycles.co.uk/images/trek-rail-9-9-x0-axs-t-type-gen-4-mountain-bike-2024-p45383-247449_image.jpg',
+                        badge: 'new',
+                        motor: 'Bosch CX Gen 5',
+                        battery: '750Wh',
+                        torque: '85Nm',
+                        weight: '23.2kg',
+                        description: 'Máxima potencia con el nuevo Bosch CX Gen 5. Geometría ajustable y suspensión de alto rendimiento.'
+                    },
+                    {
+                        id: 4,
+                        name: 'Trek Slash+',
+                        category: 'emtb-light',
+                        brand: 'trek',
+                        price: 6800,
+                        image: 'https://electricbikereview.com/wp-content/assets/2021/12/trek-rail-9-9-xx1-axs-electric-bike-review.jpg',
+                        badge: null,
+                        motor: 'TQ HPR50',
+                        battery: '580Wh',
+                        torque: '50Nm',
+                        weight: '19.5kg',
+                        description: 'E-enduro ligero con suspensión high-pivot. Silencioso y natural en el pedaleo.'
+                    },
+                    {
+                        id: 5,
+                        name: 'Cannondale Moterra SL 1',
+                        category: 'emtb-full',
+                        brand: 'cannondale',
+                        price: 7000,
+                        originalPrice: 7500,
+                        image: 'https://theloamwolf.com/wp-content/uploads/2024/11/TLW_SL_Detail_Profile-9167.jpg',
+                        badge: 'sale',
+                        motor: 'Shimano EP801',
+                        battery: '601Wh',
+                        torque: '85Nm',
+                        weight: '20.4kg',
+                        description: 'Full power sin el peso completo. Flex-pivot y geometría específica por talla.'
+                    },
+                    {
+                        id: 6,
+                        name: 'Cannondale Topstone Neo Lefty 3',
+                        category: 'gravel',
+                        brand: 'cannondale',
+                        price: 4500,
+                        image: 'https://hips.hearstapps.com/hmg-prod/images/cannondale-neo-carbon-3-lefty-tested-1590512120.jpg?crop=0.699xw:0.784xh;0.149xw,0.187xh&resize=768:*',
+                        badge: null,
+                        motor: 'Bosch Performance CX',
+                        battery: '500Wh',
+                        torque: '75Nm',
+                        weight: '17.9kg',
+                        description: 'Gravel eléctrica con horquilla Lefty. Versátil para asfalto y tierra.'
+                    },
+                    {
+                        id: 7,
+                        name: 'Cube Stereo Hybrid One77',
+                        category: 'emtb-full',
+                        brand: 'cube',
+                        price: 5200,
+                        image: 'https://cdn.shopify.com/s/files/1/0609/4838/1934/articles/2024_Cube_Stereo_Hybrid_Electric_Full_Suspension_Mountain_Bikes_a0a79d6e-42c0-42db-b3a7-3d1c2390f4d1.jpg?v=1766419674',
+                        badge: 'new',
+                        motor: 'Bosch CX Gen 5',
+                        battery: '800Wh',
+                        torque: '85Nm',
+                        weight: '24.1kg',
+                        description: '170mm de recorrido con estabilidad extrema. Batería de 800Wh para largas jornadas.'
+                    },
+                    {
+                        id: 8,
+                        name: 'Specialized Turbo Vado 5.0',
+                        category: 'urban',
+                        brand: 'specialized',
+                        price: 3800,
+                        image: 'https://assets.specialized.com/i/specialized/96220-50_VADO-50-NDGO-CHAR-BLK_HERO?$scom-pdp-gallery-image$&fmt=auto',
+                        badge: null,
+                        motor: 'Bosch Performance Line',
+                        battery: '500Wh',
+                        torque: '65Nm',
+                        weight: '25.0kg',
+                        description: 'La reina de la ciudad. Equipada con guardabarros, portabultos y luces integradas.'
+                    },
+                    {
+                        id: 9,
+                        name: 'Trek Allant+ 7',
+                        category: 'urban',
+                        brand: 'trek',
+                        price: 3200,
+                        originalPrice: 3500,
+                        image: 'https://trek.scene7.com/is/image/TrekBicycleProducts/AllantPlus7_23_36985_A_Portrait?$responsive-pjpg$&cache=on,on&wid=1920&hei=1440',
+                        badge: 'sale',
+                        motor: 'Bosch Performance Line CX',
+                        battery: '500Wh',
+                        torque: '75Nm',
+                        weight: '23.5kg',
+                        description: 'Commuter robusto con certificación UL. Ideal para trayectos diarios largos.'
+                    },
+                    {
+                        id: 10,
+                        name: 'Cannondale Moterra Neo Carbon 1',
+                        category: 'emtb-full',
+                        brand: 'cannondale',
+                        price: 10050,
+                        image: 'https://www.damianharriscycles.co.uk/_images/product-photos/ce/cannondale-moterra-sl-1-2024-mountain-bike-raw-c65264u10-a.jpg',
+                        badge: 'new',
+                        motor: 'Shimano EP801',
+                        battery: '720Wh',
+                        torque: '85Nm',
+                        weight: '21.8kg',
+                        description: 'Tope de gama Cannondale. Componentes SRAM XX Eagle AXS y ruedas DT Swiss carbono.'
+                    },
+                    {
+                        id: 11,
+                        name: 'Canyon Grail:ON CF 8',
+                        category: 'gravel',
+                        brand: 'canyon',
+                        price: 4800,
+                        image: 'https://www.canyon.com/dw/image/v2/BCML_PRD/on/demandware.static/-/Sites-canyon-master/default/dw6e3e5f1c/images/full/full_2024_/2024/full_2024_grail-on-cf-8_3652_gy-bk_P5.jpg',
+                        badge: null,
+                        motor: 'Bosch Performance Line CX',
+                        battery: '500Wh',
+                        torque: '75Nm',
+                        weight: '16.5kg',
+                        description: 'Gravel eléctrica ligera con manillar Hover. Perfecta para aventuras largas.'
+                    },
+                    {
+                        id: 12,
+                        name: 'Cube Kathmandu Hybrid EXC',
+                        category: 'urban',
+                        brand: 'cube',
+                        price: 2800,
+                        image: 'https://cdn.shopify.com/s/files/1/0609/4838/1934/files/Cube-Stereo-Hybrid-140-HPC-Race-750-2023-Electric-Bike.jpg?v=1673364376',
+                        badge: null,
+                        motor: 'Bosch Performance Line',
+                        battery: '625Wh',
+                        torque: '65Nm',
+                        weight: '24.8kg',
+                        description: 'Trekking eléctrica con equipamiento completo para viajes y ciudad.'
+                    }
+                ];
+
+                const motoresData = [
+                    {
+                        id: 101,
+                        name: 'Bosch Performance Line CX Gen 5',
+                        brand: 'Bosch',
+                        price: 1200,
+                        power: '85Nm',
+                        weight: '2.9kg',
+                        image: 'https://flowmountainbike.com/wp-content/uploads/2024/09/Bosch-eBike-Systems_Performance-Line-CX_Press-photo-2.jpg',
+                        description: 'El motor más potente de Bosch. 85Nm de torque y máxima eficiencia energética.',
+                        features: ['4 modos de asistencia', 'App connectivity', 'Ultra silencioso']
+                    },
+                    {
+                        id: 102,
+                        name: 'Shimano EP801',
+                        brand: 'Shimano',
+                        price: 950,
+                        power: '85Nm',
+                        weight: '2.7kg',
+                        image: 'https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICComponent/cg3SHICDriveUnit/cg4SHICDriveUnit/DU-EP801-shic260-primary_1.jpg/jcr:content/renditions/DU-EP801-shic260-primary_1_750_750.jpeg',
+                        description: 'Motor Shimano de última generación. Suave, potente y fiable.',
+                        features: ['Auto Shift', 'Walk Assist', 'Di2 compatible']
+                    },
+                    {
+                        id: 103,
+                        name: 'Brose Drive S Mag',
+                        brand: 'Brose',
+                        price: 1100,
+                        power: '90Nm',
+                        weight: '3.2kg',
+                        image: 'https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/10/2024/01/Brose-S-Mag-motor.jpg',
+                        description: 'Motor alemán de alta precisión. El más silencioso del mercado.',
+                        features: ['90Nm torque', 'Magneto sin escobillas', 'Refrigeración optimizada']
+                    },
+                    {
+                        id: 104,
+                        name: 'TQ HPR50',
+                        brand: 'TQ',
+                        price: 850,
+                        power: '50Nm',
+                        weight: '1.8kg',
+                        image: 'https://www.ebike24.com/blog/wp-content/uploads/2022/07/ebike-tq-hpr50-motor-1.jpg',
+                        description: 'Motor ligero y compacto. Perfecto para e-MTB de peso reducido.',
+                        features: ['Ultra ligero', 'Silencioso', 'Integración perfecta']
+                    },
+                    {
+                        id: 105,
+                        name: 'Specialized SL 1.2',
+                        brand: 'Specialized',
+                        price: 750,
+                        power: '50Nm',
+                        weight: '1.9kg',
+                        image: 'https://pub-f154438dceef491ba243fbee53912d51.r2.dev/wp-content/uploads/2024/01/03124316/specialized_sl12.jpg',
+                        description: 'Motor propietario de Specialized. Natural y eficiente.',
+                        features: ['Asistencia natural', 'Ligero', 'Batería integrada']
+                    },
+                    {
+                        id: 106,
+                        name: 'Fazua Ride 60',
+                        brand: 'Fazua',
+                        price: 900,
+                        power: '60Nm',
+                        weight: '1.9kg',
+                        image: 'https://www.fazua.com/en-us/cdn/shop/files/fazua-ride-60-motor-system.jpg',
+                        description: 'Sistema ultraligero. Motor y batería en un solo conjunto compacto.',
+                        features: ['60Nm torque', '1.9kg total', 'Sin resistencia al pedaleo']
+                    }
+                ];
+
+                const bateriasData = [
+                    {
+                        id: 201,
+                        name: 'Bosch PowerTube 750',
+                        brand: 'Bosch',
+                        price: 800,
+                        capacity: '750Wh',
+                        weight: '3.5kg',
+                        image: 'https://doctibike.com/14399-medium_default/bike-battery-bosch-powertube-750-wh-horizontal-smart-system-bbp3770.jpg',
+                        description: 'Batería integrada de alta capacidad. Autonomía para todo el día.',
+                        features: ['750Wh', 'Carga rápida', 'BMS inteligente']
+                    },
+                    {
+                        id: 202,
+                        name: 'Shimano BT-E8036',
+                        brand: 'Shimano',
+                        price: 650,
+                        capacity: '630Wh',
+                        weight: '3.1kg',
+                        image: 'https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICComponent/cg3SHICBattery/cg4SHICBattery/BT-E8036-shic260-primary_1.jpg/jcr:content/renditions/BT-E8036-shic260-primary_1_750_750.jpeg',
+                        description: 'Batería integrada de 630Wh. Compatible con sistemas EP8/EP801.',
+                        features: ['630Wh', 'Carga 80% en 2.5h', '500 ciclos de carga']
+                    },
+                    {
+                        id: 203,
+                        name: 'Specialized Range Extender',
+                        brand: 'Specialized',
+                        price: 450,
+                        capacity: '160Wh',
+                        weight: '1.0kg',
+                        image: 'https://assets.specialized.com/i/specialized/48119-710_RANGE-EXTENDER-BATTERY-SL-HP-BLK_HERO?$scom-pdp-gallery-image$&fmt=auto',
+                        description: 'Batería adicional para aumentar la autonomía. Se monta en el portabultos.',
+                        features: ['160Wh extra', 'Plug & play', 'Compatible Levo/SL']
+                    },
+                    {
+                        id: 204,
+                        name: 'Canyon Battery 720',
+                        brand: 'Canyon',
+                        price: 700,
+                        capacity: '720Wh',
+                        weight: '3.8kg',
+                        image: 'https://www.canyon.com/dw/image/v2/BCML_PRD/on/demandware.static/-/Sites-canyon-master/default/dw6e3e5f1c/images/full/full_2024_/2024/full_2024_strive-cfr-9_3260_bk-bk_P5.jpg',
+                        description: 'Batería de alta capacidad para modelos Canyon. Recarga rápida.',
+                        features: ['720Wh', 'Recarga 80% en 2h', 'Certificación UL']
+                    },
+                    {
+                        id: 205,
+                        name: 'TQ Range Booster',
+                        brand: 'TQ',
+                        price: 500,
+                        capacity: '160Wh',
+                        weight: '0.9kg',
+                        image: 'https://www.ebike24.com/blog/wp-content/uploads/2022/07/tq-hpr50-battery.jpg',
+                        description: 'Extensor de autonomía para sistemas TQ. Diseño compacto y ligero.',
+                        features: ['160Wh extra', '0.9kg', 'Fácil instalación']
+                    },
+                    {
+                        id: 206,
+                        name: 'Yamaha PW-X3 Battery',
+                        brand: 'Yamaha',
+                        price: 550,
+                        capacity: '600Wh',
+                        weight: '3.0kg',
+                        image: 'https://d2yn9m4p3q9iyv.cloudfront.net/yamaha/2024/ypj-xc/thumbs/1000/8c1e5.webp',
+                        description: 'Batería de alta calidad Yamaha. Durabilidad probada.',
+                        features: ['600Wh', 'Celdas Panasonic', 'BMS avanzado']
+                    }
+                ];
+
+                const accesoriosData = [
+                    {
+                        id: 301,
+                        name: 'Garmin Edge 1040 Solar',
+                        category: 'GPS',
+                        price: 600,
+                        image: 'https://content.syndigo.com/asset/9ef28302-ddef-4e29-9901-a19d1f1172f6/480.webp',
+                        description: 'GPS ciclista con carga solar. Autonomía ilimitada en días soleados.',
+                        features: ['Pantalla 3.5"', 'Mapas integrados', 'Carga solar']
+                    },
+                    {
+                        id: 302,
+                        name: 'GoPro Hero 12 Black',
+                        category: 'Cámara',
+                        price: 400,
+                        image: 'https://media.wired.com/photos/653acaab8ccf6086f40686d4/1:1/w_1352,h_1352,c_limit/GoPro-Hero-12-Featured-Gear.jpg',
+                        description: 'Cámara de acción 5.3K. Ideal para capturar tus aventuras en bici.',
+                        features: ['5.3K60 video', 'HyperSmooth 6.0', 'Resistente al agua']
+                    },
+                    {
+                        id: 303,
+                        name: 'Abus Bordo Alarm 6000A',
+                        category: 'Seguridad',
+                        price: 180,
+                        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+                        description: 'Candado plegable con alarma de 100dB. Máxima seguridad para tu e-bike.',
+                        features: ['Alarma 100dB', '5 barras de acero', 'Smart alarm']
+                    },
+                    {
+                        id: 304,
+                        name: 'Thule EasyFold XT 2',
+                        category: 'Transporte',
+                        price: 850,
+                        image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&h=300&fit=crop',
+                        description: 'Portabicicletas plegable para 2 e-bikes. Capacidad 60kg por bici.',
+                        features: ['Capacidad 60kg/bici', 'Plegable', 'Rampa de carga']
+                    },
+                    {
+                        id: 305,
+                        name: 'Lezyne Mega Drive 1800i',
+                        category: 'Iluminación',
+                        price: 120,
+                        image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop',
+                        description: 'Luz delantera de 1800 lúmenes. Control por app y batería integrada.',
+                        features: ['1800 lúmenes', 'App control', 'Batería USB-C']
+                    },
+                    {
+                        id: 306,
+                        name: 'Fox Transfer Factory',
+                        category: 'Suspensión',
+                        price: 450,
+                        image: 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=400&h=300&fit=crop',
+                        description: 'Tija telescópica hidráulica. 150mm de recorrido con ajuste infinito.',
+                        features: ['150mm recorrido', 'Hidráulica', 'Ajuste infinito']
+                    }
+                ];
+
+                let shoppingCart = [];
+                let currentPaymentMethod = null;
+                let toastTimer = null;
+
+                const elements = {
+                    productsGrid: null,
+                    motoresGrid: null,
+                    bateriasGrid: null,
+                    accesoriosGrid: null,
+                    cartItems: null,
+                    cartCount: null,
+                    cartTotal: null,
+                    cartSidebar: null,
+                    overlay: null,
+                    paymentModal: null,
+                    paymentOverlay: null,
+                    paymentForm: null,
+                    toast: null
+                };
+
+                function formatAmount(amount) {
+                    return Number(amount).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
+
+                function replaceImageWithFallback(imageElement, icon) {
+                    if (!imageElement || !imageElement.parentElement) {
+                        return;
+                    }
+
+                    imageElement.parentElement.innerHTML = '<div class="image-placeholder">' + icon + '</div>';
+                }
+
+                function getCategoryName(category) {
+                    const names = {
+                        'emtb-full': 'E-MTB Full Power',
+                        'emtb-light': 'E-MTB Lightweight',
+                        urban: 'Urbana / Commuter',
+                        gravel: 'Gravel / Road',
+                        cargo: 'Cargo'
+                    };
+
+                    return names[category] || category;
+                }
+
+                function setCartOpen(isOpen) {
+                    if (!elements.cartSidebar || !elements.overlay) {
+                        return;
+                    }
+
+                    elements.cartSidebar.classList.toggle('open', isOpen);
+                    elements.overlay.classList.toggle('active', isOpen);
+                }
+
+                function toggleCart() {
+                    if (!elements.cartSidebar) {
+                        return;
+                    }
+
+                    setCartOpen(!elements.cartSidebar.classList.contains('open'));
+                }
+
+                function closePaymentModal() {
+                    if (elements.paymentModal) {
+                        elements.paymentModal.classList.remove('active');
+                    }
+
+                    if (elements.paymentOverlay) {
+                        elements.paymentOverlay.classList.remove('active');
+                    }
+                }
+
+                function closeConfirmationModal() {
+                    const modal = document.getElementById('confirmationModal');
+                    if (modal) {
+                        modal.remove();
+                    }
+                }
+
+                function showToast(message) {
+                    if (!elements.toast) {
+                        return;
+                    }
+
+                    if (toastTimer) {
+                        clearTimeout(toastTimer);
+                    }
+
+                    elements.toast.textContent = message;
+                    elements.toast.classList.add('show');
+
+                    toastTimer = setTimeout(function() {
+                        elements.toast.classList.remove('show');
+                        toastTimer = null;
+                    }, 3000);
+                }
+
+                function initScrollAnimations() {
+                    const animatedNodes = document.querySelectorAll('.animate-on-scroll:not(.visible)');
+
+                    if (!('IntersectionObserver' in window)) {
+                        animatedNodes.forEach(function(node) {
+                            node.classList.add('visible');
+                        });
+                        return;
+                    }
+
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+
+                    animatedNodes.forEach(function(node) {
+                        observer.observe(node);
+                    });
+                }
+
+                function scrollToSection(sectionId) {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+
+                function renderProducts() {
+                    if (!elements.productsGrid) {
+                        return;
+                    }
+
+                    const categoryFilter = document.getElementById('categoryFilter');
+                    const brandFilter = document.getElementById('brandFilter');
+                    const priceFilter = document.getElementById('priceFilter');
+
+                    const categoryValue = categoryFilter ? categoryFilter.value : 'all';
+                    const brandValue = brandFilter ? brandFilter.value : 'all';
+                    const priceValue = priceFilter ? priceFilter.value : 'all';
+
+                    const filteredProducts = inventory.filter(function(product) {
+                        const matchesCategory = categoryValue === 'all' || product.category === categoryValue;
+                        const matchesBrand = brandValue === 'all' || product.brand === brandValue;
+
+                        let matchesPrice = true;
+
+                        if (priceValue === '0-3000') {
+                            matchesPrice = product.price <= 3000;
+                        } else if (priceValue === '3000-6000') {
+                            matchesPrice = product.price > 3000 && product.price <= 6000;
+                        } else if (priceValue === '6000+') {
+                            matchesPrice = product.price > 6000;
+                        }
+
+                        return matchesCategory && matchesBrand && matchesPrice;
+                    });
+
+                    elements.productsGrid.innerHTML = filteredProducts.map(function(product, index) {
+                        return `
+                            <div class="product-card animate-on-scroll delay-${(index % 6) + 1}">
+                                ${product.badge ? `<div class="product-badge ${product.badge}">${product.badge === 'new' ? 'NUEVO 2025' : 'OFERTA'}</div>` : ''}
+                                <div class="product-image-container">
+                                    <img
+                                        src="${product.image}"
+                                        alt="${product.name}"
+                                        class="product-image"
+                                        onerror="window.turboBikeApp.replaceImageWithFallback(this, '🚲')"
+                                    >
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-category">${getCategoryName(product.category)}</div>
+                                    <h3 class="product-name">${product.name}</h3>
+                                    <div class="product-specs">
+                                        <span class="spec"><span class="spec-icon">⚡</span> ${product.motor}</span>
+                                        <span class="spec"><span class="spec-icon">🔋</span> ${product.battery}</span>
+                                        <span class="spec"><span class="spec-icon">💪</span> ${product.torque}</span>
+                                        <span class="spec"><span class="spec-icon">⚖️</span> ${product.weight}</span>
+                                    </div>
+                                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.4;">${product.description}</p>
+                                    <div class="product-price">
+                                        <span class="current-price">$${formatAmount(product.price)}</span>
+                                        ${product.originalPrice ? `<span class="original-price">$${formatAmount(product.originalPrice)}</span>` : ''}
+                                    </div>
+                                    <div class="product-actions">
+                                        <button class="btn-add-cart" onclick="window.turboBikeApp.addToCart(${product.id})">Agregar al Carrito</button>
+                                        <button class="btn-details" onclick="window.turboBikeApp.showDetails(${product.id})">📋</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    initScrollAnimations();
+                }
+
+                function renderMotores() {
+                    if (!elements.motoresGrid) {
+                        return;
+                    }
+
+                    elements.motoresGrid.innerHTML = motoresData.map(function(motor, index) {
+                        return `
+                            <div class="component-card animate-on-scroll delay-${(index % 6) + 1}">
+                                <div class="component-image-container">
+                                    <img
+                                        src="${motor.image}"
+                                        alt="${motor.name}"
+                                        class="component-image"
+                                        onerror="window.turboBikeApp.replaceImageWithFallback(this, '⚡')"
+                                    >
+                                </div>
+                                <h3 class="component-name">${motor.name}</h3>
+                                <div class="component-specs">${motor.brand} • ${motor.power} • ${motor.weight}</div>
+                                <div class="component-price">$${formatAmount(motor.price)}</div>
+                                <p class="component-description">${motor.description}</p>
+                                <div style="margin-bottom: 1rem;">
+                                    ${motor.features.map(function(feature) {
+                                        return `<span class="spec" style="margin: 0.2rem; display: inline-block;">${feature}</span>`;
+                                    }).join('')}
+                                </div>
+                                <button class="btn-component" onclick="window.turboBikeApp.addComponentToCart(${motor.id}, 'motor')">Agregar al Carrito</button>
+                            </div>
+                        `;
+                    }).join('');
+
+                    initScrollAnimations();
+                }
+
+                function renderBaterias() {
+                    if (!elements.bateriasGrid) {
+                        return;
+                    }
+
+                    elements.bateriasGrid.innerHTML = bateriasData.map(function(bateria, index) {
+                        return `
+                            <div class="component-card animate-on-scroll delay-${(index % 6) + 1}">
+                                <div class="component-image-container">
+                                    <img
+                                        src="${bateria.image}"
+                                        alt="${bateria.name}"
+                                        class="component-image"
+                                        onerror="window.turboBikeApp.replaceImageWithFallback(this, '🔋')"
+                                    >
+                                </div>
+                                <h3 class="component-name">${bateria.name}</h3>
+                                <div class="component-specs">${bateria.brand} • ${bateria.capacity} • ${bateria.weight}</div>
+                                <div class="component-price">$${formatAmount(bateria.price)}</div>
+                                <p class="component-description">${bateria.description}</p>
+                                <div style="margin-bottom: 1rem;">
+                                    ${bateria.features.map(function(feature) {
+                                        return `<span class="spec" style="margin: 0.2rem; display: inline-block;">${feature}</span>`;
+                                    }).join('')}
+                                </div>
+                                <button class="btn-component" onclick="window.turboBikeApp.addComponentToCart(${bateria.id}, 'bateria')">Agregar al Carrito</button>
+                            </div>
+                        `;
+                    }).join('');
+
+                    initScrollAnimations();
+                }
+
+                function renderAccesorios() {
+                    if (!elements.accesoriosGrid) {
+                        return;
+                    }
+
+                    elements.accesoriosGrid.innerHTML = accesoriosData.map(function(accesorio, index) {
+                        return `
+                            <div class="component-card animate-on-scroll delay-${(index % 6) + 1}">
+                                <div class="component-image-container">
+                                    <img
+                                        src="${accesorio.image}"
+                                        alt="${accesorio.name}"
+                                        class="component-image"
+                                        onerror="window.turboBikeApp.replaceImageWithFallback(this, '🛠️')"
+                                    >
+                                </div>
+                                <h3 class="component-name">${accesorio.name}</h3>
+                                <div class="component-specs">${accesorio.category}</div>
+                                <div class="component-price">$${formatAmount(accesorio.price)}</div>
+                                <p class="component-description">${accesorio.description}</p>
+                                <div style="margin-bottom: 1rem;">
+                                    ${accesorio.features.map(function(feature) {
+                                        return `<span class="spec" style="margin: 0.2rem; display: inline-block;">${feature}</span>`;
+                                    }).join('')}
+                                </div>
+                                <button class="btn-component" onclick="window.turboBikeApp.addComponentToCart(${accesorio.id}, 'accesorio')">Agregar al Carrito</button>
+                            </div>
+                        `;
+                    }).join('');
+
+                    initScrollAnimations();
+                }
+
+                function filterProducts() {
+                    renderProducts();
+                }
+
+                function clearFilters() {
+                    const categoryFilter = document.getElementById('categoryFilter');
+                    const brandFilter = document.getElementById('brandFilter');
+                    const priceFilter = document.getElementById('priceFilter');
+
+                    if (categoryFilter) {
+                        categoryFilter.value = 'all';
+                    }
+                    if (brandFilter) {
+                        brandFilter.value = 'all';
+                    }
+                    if (priceFilter) {
+                        priceFilter.value = 'all';
+                    }
+
+                    renderProducts();
+                }
+
+                function addToCart(productId) {
+                    const product = inventory.find(function(item) {
+                        return item.id === productId;
+                    });
+
+                    if (!product) {
+                        return;
+                    }
+
+                    const existingItem = shoppingCart.find(function(item) {
+                        return item.id === productId && item.type === 'bike';
+                    });
+
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        shoppingCart.push(Object.assign({}, product, { quantity: 1, type: 'bike' }));
+                    }
+
+                    updateCart();
+                    showToast('✅ ' + product.name + ' agregada al carrito');
+                }
+
+                function addComponentToCart(componentId, type) {
+                    let component = null;
+
+                    if (type === 'motor') {
+                        component = motoresData.find(function(item) {
+                            return item.id === componentId;
+                        });
+                    } else if (type === 'bateria') {
+                        component = bateriasData.find(function(item) {
+                            return item.id === componentId;
+                        });
+                    } else if (type === 'accesorio') {
+                        component = accesoriosData.find(function(item) {
+                            return item.id === componentId;
+                        });
+                    }
+
+                    if (!component) {
+                        return;
+                    }
+
+                    const existingItem = shoppingCart.find(function(item) {
+                        return item.id === componentId && item.type === type;
+                    });
+
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        shoppingCart.push(Object.assign({}, component, { quantity: 1, type: type }));
+                    }
+
+                    updateCart();
+                    showToast('✅ ' + component.name + ' agregado al carrito');
+                }
+
+                function updateCart() {
+                    if (!elements.cartItems || !elements.cartCount || !elements.cartTotal) {
+                        return;
+                    }
+
+                    const totalItems = shoppingCart.reduce(function(total, item) {
+                        return total + item.quantity;
+                    }, 0);
+
+                    const totalAmount = shoppingCart.reduce(function(total, item) {
+                        return total + (item.price * item.quantity);
+                    }, 0);
+
+                    elements.cartCount.textContent = totalItems;
+                    elements.cartTotal.textContent = '$' + formatAmount(totalAmount);
+
+                    if (shoppingCart.length === 0) {
+                        elements.cartItems.innerHTML = `
+                            <div class="empty-cart">
+                                <div class="empty-cart-icon">🛒</div>
+                                <p>Tu carrito está vacío</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    elements.cartItems.innerHTML = shoppingCart.map(function(item) {
+                        const itemIcon = item.type === 'bike' ? '🚲' : item.type === 'motor' ? '⚡' : item.type === 'bateria' ? '🔋' : '🛠️';
+
+                        return `
+                            <div class="cart-item">
+                                <div style="width: 80px; height: 80px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                                    ${itemIcon}
+                                </div>
+                                <div class="cart-item-details">
+                                    <div class="cart-item-name">${item.name}</div>
+                                    <div class="cart-item-price">$${formatAmount(item.price)}</div>
+                                    <div class="cart-item-quantity">
+                                        <button class="qty-btn" onclick="window.turboBikeApp.updateQuantity(${item.id}, '${item.type}', -1)">-</button>
+                                        <span>${item.quantity}</span>
+                                        <button class="qty-btn" onclick="window.turboBikeApp.updateQuantity(${item.id}, '${item.type}', 1)">+</button>
+                                    </div>
+                                    <span class="remove-item" onclick="window.turboBikeApp.removeFromCart(${item.id}, '${item.type}')">Eliminar</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                function updateQuantity(itemId, itemType, change) {
+                    const item = shoppingCart.find(function(cartItem) {
+                        return cartItem.id === itemId && cartItem.type === itemType;
+                    });
+
+                    if (!item) {
+                        return;
+                    }
+
+                    item.quantity += change;
+
+                    if (item.quantity <= 0) {
+                        removeFromCart(itemId, itemType);
+                        return;
+                    }
+
+                    updateCart();
+                }
+
+                function removeFromCart(itemId, itemType) {
+                    shoppingCart = shoppingCart.filter(function(item) {
+                        return !(item.id === itemId && item.type === itemType);
+                    });
+
+                    updateCart();
+                }
+
+                function openPaymentModal() {
+                    if (shoppingCart.length === 0) {
+                        showToast('⚠️ Tu carrito está vacío');
+                        return;
+                    }
+
+                    if (elements.paymentModal) {
+                        elements.paymentModal.classList.add('active');
+                    }
+
+                    if (elements.paymentOverlay) {
+                        elements.paymentOverlay.classList.add('active');
+                    }
+                }
+
+                function selectPayment(method, selectedElement) {
+                    currentPaymentMethod = method;
+
+                    document.querySelectorAll('.payment-method').forEach(function(element) {
+                        element.classList.remove('selected');
+                    });
+
+                    if (selectedElement) {
+                        selectedElement.classList.add('selected');
+                    }
+                }
+
+                function generateOxxoReference() {
+                    let reference = '';
+
+                    for (let index = 0; index < 12; index += 1) {
+                        reference += Math.floor(Math.random() * 10);
+                    }
+
+                    return reference.match(/.{1,4}/g).join(' ');
+                }
+
+                function showPaymentModal(title, message, link, buttonText, extraHtml) {
+                    closePaymentModal();
+                    closeConfirmationModal();
+
+                    const confirmationWrapper = document.createElement('div');
+                    confirmationWrapper.id = 'confirmationModal';
+                    confirmationWrapper.innerHTML = `
+                        <div class="overlay active" onclick="window.turboBikeApp.closeConfirmationModal()" style="z-index: 4000;"></div>
+                        <div class="modal active" style="z-index: 4001; max-width: 500px;">
+                            <div class="modal-header">
+                                <h2>✅ ${title}</h2>
+                                <button class="close-modal" onclick="window.turboBikeApp.closeConfirmationModal()">✕</button>
+                            </div>
+                            <div style="white-space: pre-line; line-height: 1.6; margin-bottom: 20px; font-size: 14px;">
+                                ${message}
+                            </div>
+                            ${extraHtml || ''}
+                            ${link ? `
+                                <a
+                                    href="${link}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="display: block; background: var(--primary); color: white; text-align: center; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 15px;"
+                                >
+                                    ${buttonText} →
+                                </a>
+                            ` : ''}
+                            <button
+                                onclick="window.turboBikeApp.finishOrder()"
+                                style="width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: 600; margin-top: 15px; cursor: pointer;"
+                            >
+                                Entendido, finalizar pedido
+                            </button>
+                        </div>
+                    `;
+
+                    document.body.appendChild(confirmationWrapper);
+                }
+
+                function processPayPalPayment(total, orderId, customerName) {
+                    const paypalLink = 'https://www.paypal.com/paypalme/jlm3967/' + total;
+                    const message =
+                        '🚲 TURBOBIKE - PEDIDO ' + orderId + '\n\n' +
+                        'Cliente: ' + customerName + '\n' +
+                        'Total: $' + formatAmount(total) + ' USD\n\n' +
+                        'Para completar tu pago:\n' +
+                        '1. Haz clic en el botón de abajo\n' +
+                        '2. Ingresa la cantidad exacta: $' + formatAmount(total) + '\n' +
+                        '3. En "Agregar nota" escribe: ' + orderId + '\n\n' +
+                        '⚠️ IMPORTANTE: Envía tu comprobante a jlm3967@gmail.com';
+
+                    showPaymentModal('PayPal', message, paypalLink, 'Ir a PayPal');
+                }
+
+                function processOxxoPayment(total, orderId, customerName) {
+                    const oxxoReference = generateOxxoReference();
+                    const message =
+                        '🏪 TURBOBIKE - PAGO EN OXXO\n\n' +
+                        'Pedido: ' + orderId + '\n' +
+                        'Cliente: ' + customerName + '\n\n' +
+                        '💰 Monto a pagar: $' + formatAmount(total) + ' MXN\n\n' +
+                        'Instrucciones:\n' +
+                        '1. Ve a cualquier tienda OXXO\n' +
+                        '2. Di que quieres hacer un pago\n' +
+                        '3. Dicta la referencia: ' + oxxoReference + '\n' +
+                        '4. Paga la cantidad exacta en efectivo\n\n' +
+                        '⏰ Tu pago se verificará en 24-48 horas';
+
+                    const barcodeHtml = `
+                        <div class="reference-box">
+                            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">REFERENCIA DE PAGO</div>
+                            <div class="reference-number">${oxxoReference}</div>
+                            <div style="font-size: 24px; letter-spacing: 4px; margin: 10px 0;">||| |||| | |||| || |||| |||</div>
+                            <div style="font-size: 11px; color: #999;">Presenta esto en cualquier OXXO</div>
+                        </div>
+                    `;
+
+                    showPaymentModal('OXXO Pay', message, null, null, barcodeHtml);
+                }
+
+                function processTransferPayment(total, orderId, customerName) {
+                    const banco = 'BBVA Bancomer';
+                    const titular = 'JORGE ARMANDO LOZANO MARTINEZ';
+                    const cuenta = '0123456789012345';
+                    const clabe = '012345678901234567';
+
+                    const message =
+                        '🏦 TURBOBIKE - TRANSFERENCIA BANCARIA\n\n' +
+                        'Pedido: ' + orderId + '\n' +
+                        'Cliente: ' + customerName + '\n' +
+                        'Total: $' + formatAmount(total) + ' MXN\n\n' +
+                        '📋 DATOS BANCARIOS:\n\n' +
+                        'Banco: ' + banco + '\n' +
+                        'Titular: ' + titular + '\n' +
+                        'Cuenta: ' + cuenta + '\n' +
+                        'CLABE: ' + clabe + '\n' +
+                        'Concepto: ' + orderId + '\n\n' +
+                        '⚠️ IMPORTANTE:\n' +
+                        '• Usa el número de pedido como concepto\n' +
+                        '• Envía tu comprobante a: jlm3967@gmail.com';
+
+                    const copyButton = `
+                        <button
+                            onclick="window.turboBikeApp.copyBankData('${orderId}', '${banco}', '${titular}', '${cuenta}', '${clabe}')"
+                            style="width: 100%; background: #004481; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: 600; font-size: 16px;"
+                        >
+                            📋 Copiar datos bancarios
+                        </button>
+                    `;
+
+                    showPaymentModal('Transferencia Bancaria', message, null, null, copyButton);
+                }
+
+                function processPayment() {
+                    const nameInput = document.getElementById('customerName');
+                    const emailInput = document.getElementById('customerEmail');
+                    const phoneInput = document.getElementById('customerPhone');
+
+                    if (!nameInput || !emailInput || !phoneInput) {
+                        showToast('⚠️ Error en el formulario');
+                        return;
+                    }
+
+                    const customerName = nameInput.value.trim();
+                    const customerEmail = emailInput.value.trim();
+                    const customerPhone = phoneInput.value.trim();
+
+                    if (!customerName || !customerEmail || !customerPhone) {
+                        showToast('⚠️ Por favor completa todos los campos');
+                        return;
+                    }
+
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(customerEmail)) {
+                        showToast('⚠️ Correo electrónico inválido');
+                        return;
+                    }
+
+                    if (!currentPaymentMethod) {
+                        showToast('⚠️ Selecciona un método de pago');
+                        return;
+                    }
+
+                    const total = shoppingCart.reduce(function(sum, item) {
+                        return sum + (item.price * item.quantity);
+                    }, 0);
+                    const orderId = 'TB-' + Date.now();
+
+                    if (currentPaymentMethod === 'paypal') {
+                        processPayPalPayment(total, orderId, customerName);
+                    } else if (currentPaymentMethod === 'oxxo') {
+                        processOxxoPayment(total, orderId, customerName, customerEmail);
+                    } else if (currentPaymentMethod === 'transfer') {
+                        processTransferPayment(total, orderId, customerName);
+                    }
+                }
+
+                function copyBankData(orderId, banco, titular, cuenta, clabe) {
+                    const bankText =
+                        'Banco: ' + banco + '\n' +
+                        'Titular: ' + titular + '\n' +
+                        'Cuenta: ' + cuenta + '\n' +
+                        'CLABE: ' + clabe + '\n' +
+                        'Concepto: ' + orderId;
+
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(bankText).then(function() {
+                            showToast('📋 Datos bancarios copiados');
+                        }).catch(function() {
+                            window.prompt('Copia estos datos:', bankText);
+                        });
+                        return;
+                    }
+
+                    window.prompt('Copia estos datos:', bankText);
+                }
+
+                function resetPaymentState() {
+                    currentPaymentMethod = null;
+
+                    document.querySelectorAll('.payment-method').forEach(function(element) {
+                        element.classList.remove('selected');
+                    });
+
+                    if (elements.paymentForm) {
+                        elements.paymentForm.reset();
+                    }
+                }
+
+                function finishOrder() {
+                    closeConfirmationModal();
+                    shoppingCart = [];
+                    updateCart();
+                    resetPaymentState();
+                    closePaymentModal();
+                    setCartOpen(false);
+                    showToast('🎉 ¡Pedido realizado! Revisa tu correo');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                function showDetails(productId) {
+                    const product = inventory.find(function(item) {
+                        return item.id === productId;
+                    });
+
+                    if (!product) {
+                        return;
+                    }
+
+                    window.alert(
+                        product.name + '\n\n' +
+                        'Motor: ' + product.motor + '\n' +
+                        'Batería: ' + product.battery + '\n' +
+                        'Torque: ' + product.torque + '\n' +
+                        'Peso: ' + product.weight + '\n\n' +
+                        product.description
+                    );
+                }
+
+                function init() {
+                    elements.productsGrid = document.getElementById('productsGrid');
+                    elements.motoresGrid = document.getElementById('motoresGrid');
+                    elements.bateriasGrid = document.getElementById('bateriasGrid');
+                    elements.accesoriosGrid = document.getElementById('accesoriosGrid');
+                    elements.cartItems = document.getElementById('cartItems');
+                    elements.cartCount = document.getElementById('cartCount');
+                    elements.cartTotal = document.getElementById('cartTotal');
+                    elements.cartSidebar = document.getElementById('cartSidebar');
+                    elements.overlay = document.getElementById('overlay');
+                    elements.paymentModal = document.getElementById('paymentModal');
+                    elements.paymentOverlay = document.getElementById('paymentOverlay');
+                    elements.paymentForm = document.getElementById('paymentForm');
+                    elements.toast = document.getElementById('toast');
+
+                    renderProducts();
+                    renderMotores();
+                    renderBaterias();
+                    renderAccesorios();
+                    updateCart();
+                    initScrollAnimations();
+                }
+
+                window.turboBikeApp = {
+                    init: init,
+                    scrollToSection: scrollToSection,
+                    filterProducts: filterProducts,
+                    clearFilters: clearFilters,
+                    addToCart: addToCart,
+                    addComponentToCart: addComponentToCart,
+                    updateQuantity: updateQuantity,
+                    removeFromCart: removeFromCart,
+                    setCartOpen: setCartOpen,
+                    toggleCart: toggleCart,
+                    openPaymentModal: openPaymentModal,
+                    closePaymentModal: closePaymentModal,
+                    selectPayment: selectPayment,
+                    processPayment: processPayment,
+                    processPayPalPayment: processPayPalPayment,
+                    processOxxoPayment: processOxxoPayment,
+                    processTransferPayment: processTransferPayment,
+                    generateOxxoReference: generateOxxoReference,
+                    showPaymentModal: showPaymentModal,
+                    closeConfirmationModal: closeConfirmationModal,
+                    copyBankData: copyBankData,
+                    finishOrder: finishOrder,
+                    showDetails: showDetails,
+                    replaceImageWithFallback: replaceImageWithFallback
+                };
+
+                function safeInit() {
+                    if (window.turboBikeInitialized) {
+                        return;
+                    }
+
+                    try {
+                        init();
+                        window.turboBikeInitialized = true;
+                    } catch (error) {
+                        window.turboBikeInitialized = false;
+                        console.error('TurboBike no pudo inicializarse:', error);
+                        throw error;
+                    }
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', safeInit, { once: true });
+                } else {
+                    safeInit();
+                }
+            })();
+        }
+    </script>
+</body>
+</html>
