@@ -455,6 +455,23 @@
             gap: 2rem;
         }
 
+        .catalog-feedback {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .catalog-feedback strong {
+            display: block;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
         .product-card {
             background: white;
             border-radius: 16px;
@@ -1198,31 +1215,21 @@
                     <label>Categoría</label>
                     <select id="categoryFilter" onchange="window.turboBikeApp.filterProducts()">
                         <option value="all">Todas las categorías</option>
-                        <option value="emtb-full">E-MTB Full Power</option>
-                        <option value="emtb-light">E-MTB Lightweight</option>
-                        <option value="urban">Urbanas / Commuter</option>
-                        <option value="gravel">Gravel / Road</option>
-                        <option value="cargo">Cargo</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label>Marca</label>
                     <select id="brandFilter" onchange="window.turboBikeApp.filterProducts()">
                         <option value="all">Todas las marcas</option>
-                        <option value="specialized">Specialized</option>
-                        <option value="trek">Trek</option>
-                        <option value="cannondale">Cannondale</option>
-                        <option value="cube">Cube</option>
-                        <option value="canyon">Canyon</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label>Precio</label>
                     <select id="priceFilter" onchange="window.turboBikeApp.filterProducts()">
                         <option value="all">Todos los precios</option>
-                        <option value="0-3000">$0 - $3,000</option>
-                        <option value="3000-6000">$3,000 - $6,000</option>
-                        <option value="6000+">Más de $6,000</option>
+                        <option value="0-10000">$0 - $10,000</option>
+                        <option value="10000-30000">$10,000 - $30,000</option>
+                        <option value="30000+">Más de $30,000</option>
                     </select>
                 </div>
                 <button class="clear-filters" onclick="window.turboBikeApp.clearFilters()">Limpiar Filtros</button>
@@ -1234,7 +1241,7 @@
         <div class="container">
             <div class="section-title animate-on-scroll">
                 <h2>Catálogo 2024-2025</h2>
-                <p>Modelos reales con especificaciones técnicas verificadas</p>
+                <p id="catalogSubtitle">Bicicletas sincronizadas con WordPress / WooCommerce</p>
             </div>
             <div class="products-grid" id="productsGrid"></div>
         </div>
@@ -1350,7 +1357,7 @@
             (function() {
                 'use strict';
 
-                const inventory = [
+                const fallbackInventory = [
                     {
                         id: 1,
                         name: 'Specialized Turbo Levo Gen 4',
@@ -1719,6 +1726,17 @@
                     }
                 ];
 
+                const PRIMARY_BIKE_CATEGORY_SLUGS = ['bicicletas-electricas', 'bicicletas-con-motor', 'bicicletas'];
+                const GENERIC_BIKE_CATEGORY_SLUGS = PRIMARY_BIKE_CATEGORY_SLUGS.slice();
+
+                const catalogState = {
+                    loading: false,
+                    source: 'static',
+                    error: null,
+                    fetchedAt: null
+                };
+
+                let inventory = [];
                 let shoppingCart = [];
                 let currentPaymentMethod = null;
                 let currentHeroSlide = 0;
@@ -1748,6 +1766,15 @@
                     });
                 }
 
+                function escapeHtml(value) {
+                    return String(value == null ? '' : value)
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+                }
+
                 function replaceImageWithFallback(imageElement, icon) {
                     if (!imageElement || !imageElement.parentElement) {
                         return;
@@ -1756,17 +1783,350 @@
                     imageElement.parentElement.innerHTML = '<div class="image-placeholder">' + icon + '</div>';
                 }
 
+                function htmlToText(html) {
+                    if (!html) {
+                        return '';
+                    }
+
+                    const parserNode = document.createElement('div');
+                    parserNode.innerHTML = html;
+
+                    return (parserNode.textContent || parserNode.innerText || '')
+                        .replace(/\s+/g, ' ')
+                        .trim();
+                }
+
+                function truncateText(text, maxLength) {
+                    const normalizedText = String(text || '').trim();
+
+                    if (!normalizedText || normalizedText.length <= maxLength) {
+                        return normalizedText;
+                    }
+
+                    return normalizedText.slice(0, maxLength - 1).trimEnd() + '…';
+                }
+
+                function slugifyText(value) {
+                    return String(value || '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                }
+
                 function getCategoryName(category) {
                     const names = {
                         'emtb-full': 'E-MTB Full Power',
                         'emtb-light': 'E-MTB Lightweight',
                         urban: 'Urbana / Commuter',
                         gravel: 'Gravel / Road',
-                        cargo: 'Cargo'
+                        cargo: 'Cargo',
+                        bicicletas: 'Bicicletas',
+                        'bicicletas-electricas': 'Bicicletas Eléctricas',
+                        'bicicletas-con-motor': 'Bicicletas con Motor'
                     };
 
                     return names[category] || category;
                 }
+
+                function getBrandName(brand) {
+                    const names = {
+                        specialized: 'Specialized',
+                        trek: 'Trek',
+                        cannondale: 'Cannondale',
+                        cube: 'Cube',
+                        canyon: 'Canyon',
+                        monk: 'Monk',
+                        alubike: 'Alubike',
+                        mercurio: 'Mercurio',
+                        benotto: 'Benotto'
+                    };
+
+                    if (!brand) {
+                        return '';
+                    }
+
+                    return names[brand] || String(brand).replace(/-/g, ' ').replace(/\b\w/g, function(character) {
+                        return character.toUpperCase();
+                    });
+                }
+
+                function createProductHighlights(values) {
+                    return values
+                        .map(function(value) {
+                            return truncateText(String(value || '').replace(/\s+/g, ' ').trim(), 48);
+                        })
+                        .filter(Boolean)
+                        .filter(function(value, index, list) {
+                            return list.indexOf(value) === index;
+                        })
+                        .slice(0, 4);
+                }
+
+                function extractHighlightsFromHtml(html) {
+                    if (!html) {
+                        return [];
+                    }
+
+                    const parserNode = document.createElement('div');
+                    parserNode.innerHTML = html;
+
+                    const listItems = Array.from(parserNode.querySelectorAll('li')).map(function(item) {
+                        return item.textContent || '';
+                    });
+                    const paragraphItems = Array.from(parserNode.querySelectorAll('p')).map(function(item) {
+                        return item.textContent || '';
+                    });
+                    const fallbackText = htmlToText(html);
+
+                    return createProductHighlights(
+                        listItems.length ? listItems : paragraphItems.length ? paragraphItems : fallbackText ? [fallbackText] : []
+                    );
+                }
+
+                function parseWooPrice(value, minorUnit) {
+                    const numericValue = Number(value || 0);
+                    const divisor = Math.pow(10, Number(minorUnit || 2));
+
+                    return numericValue / divisor;
+                }
+
+                function getPrimaryBikeCategory(categories) {
+                    const safeCategories = Array.isArray(categories) ? categories : [];
+
+                    const matchedCategory = PRIMARY_BIKE_CATEGORY_SLUGS.map(function(slug) {
+                        return safeCategories.find(function(category) {
+                            return category && category.slug === slug;
+                        });
+                    }).find(Boolean);
+
+                    return matchedCategory || safeCategories[0] || null;
+                }
+
+                function getBrandCategory(categories) {
+                    return (Array.isArray(categories) ? categories : []).find(function(category) {
+                        return category && category.slug && GENERIC_BIKE_CATEGORY_SLUGS.indexOf(category.slug) === -1;
+                    }) || null;
+                }
+
+                function guessBrandNameFromTitle(title) {
+                    const ignoredTokens = [
+                        'bike',
+                        'bicicleta',
+                        'bicicletas',
+                        'electrica',
+                        'electricas',
+                        'enduro',
+                        'montana',
+                        'montanas',
+                        'rod',
+                        'mod',
+                        'modelo',
+                        'line',
+                        'motor'
+                    ];
+                    const candidate = String(title || '')
+                        .trim()
+                        .split(/\s+/)
+                        .find(function(token) {
+                            const normalizedToken = slugifyText(token);
+
+                            return normalizedToken && ignoredTokens.indexOf(normalizedToken) === -1 && !/^\d+$/.test(token);
+                        });
+
+                    if (!candidate) {
+                        return '';
+                    }
+
+                    return getBrandName(slugifyText(candidate));
+                }
+
+                function normalizeInventoryProduct(product) {
+                    return Object.assign({}, product, {
+                        categoryLabel: product.categoryLabel || getCategoryName(product.category),
+                        brandSlug: product.brandSlug || product.brand || slugifyText(product.brandName || ''),
+                        brandName: product.brandName || getBrandName(product.brand),
+                        highlights: createProductHighlights(
+                            product.highlights && product.highlights.length
+                                ? product.highlights
+                                : [product.motor, product.battery, product.torque, product.weight]
+                        ),
+                        description: truncateText(product.description || '', 190),
+                        fullDescription: product.fullDescription || product.description || '',
+                        source: product.source || 'static'
+                    });
+                }
+
+                function mapWooProduct(product) {
+                    const priceData = product && product.prices ? product.prices : {};
+                    const categories = Array.isArray(product.categories) ? product.categories : [];
+                    const primaryCategory = getPrimaryBikeCategory(categories);
+                    const brandCategory = getBrandCategory(categories);
+                    const brandName = brandCategory ? brandCategory.name : guessBrandNameFromTitle(product.name);
+                    const brandSlug = brandCategory ? brandCategory.slug : slugifyText(brandName);
+                    const shortDescription = truncateText(htmlToText(product.short_description), 190);
+                    const descriptionText = truncateText(htmlToText(product.description), 240);
+                    const highlights = extractHighlightsFromHtml(product.description || product.short_description);
+                    const price = parseWooPrice(priceData.price, priceData.currency_minor_unit);
+                    const originalPrice = parseWooPrice(priceData.regular_price || priceData.price, priceData.currency_minor_unit);
+                    const image = (product.images && product.images[0] && (product.images[0].src || product.images[0].thumbnail)) || '';
+
+                    return normalizeInventoryProduct({
+                        id: product.id,
+                        name: htmlToText(product.name),
+                        category: primaryCategory ? primaryCategory.slug : 'bicicletas',
+                        categoryLabel: primaryCategory ? primaryCategory.name : 'Bicicletas',
+                        brand: brandSlug,
+                        brandSlug: brandSlug,
+                        brandName: brandName,
+                        price: price,
+                        originalPrice: originalPrice > price ? originalPrice : null,
+                        image: image,
+                        badge: originalPrice > price ? 'sale' : null,
+                        description: shortDescription || descriptionText || 'Consulta la ficha completa del producto en WordPress.',
+                        fullDescription: descriptionText || shortDescription || '',
+                        highlights: highlights.length ? highlights : [brandName, primaryCategory ? primaryCategory.name : 'Bicicletas'],
+                        permalink: product.permalink || null,
+                        source: 'wordpress'
+                    });
+                }
+
+                function setCatalogMessage(title, description) {
+                    if (!elements.productsGrid) {
+                        return;
+                    }
+
+                    elements.productsGrid.innerHTML = `
+                        <div class="catalog-feedback">
+                            <strong>${escapeHtml(title)}</strong>
+                            <span>${escapeHtml(description || '')}</span>
+                        </div>
+                    `;
+                }
+
+                function updateCatalogSubtitle(message) {
+                    const subtitle = document.getElementById('catalogSubtitle');
+
+                    if (subtitle) {
+                        subtitle.textContent = message;
+                    }
+                }
+
+                function populateProductFilters(products) {
+                    const categoryFilter = document.getElementById('categoryFilter');
+                    const brandFilter = document.getElementById('brandFilter');
+
+                    if (!categoryFilter || !brandFilter) {
+                        return;
+                    }
+
+                    const currentCategory = categoryFilter.value || 'all';
+                    const currentBrand = brandFilter.value || 'all';
+
+                    const categories = products
+                        .map(function(product) {
+                            return {
+                                value: product.category,
+                                label: product.categoryLabel || getCategoryName(product.category)
+                            };
+                        })
+                        .filter(function(option) {
+                            return option.value && option.label;
+                        })
+                        .filter(function(option, index, list) {
+                            return list.findIndex(function(candidate) {
+                                return candidate.value === option.value;
+                            }) === index;
+                        })
+                        .sort(function(first, second) {
+                            return first.label.localeCompare(second.label, 'es');
+                        });
+
+                    const brands = products
+                        .map(function(product) {
+                            return {
+                                value: product.brandSlug || product.brand,
+                                label: product.brandName || getBrandName(product.brand)
+                            };
+                        })
+                        .filter(function(option) {
+                            return option.value && option.label;
+                        })
+                        .filter(function(option, index, list) {
+                            return list.findIndex(function(candidate) {
+                                return candidate.value === option.value;
+                            }) === index;
+                        })
+                        .sort(function(first, second) {
+                            return first.label.localeCompare(second.label, 'es');
+                        });
+
+                    categoryFilter.innerHTML = [
+                        '<option value="all">Todas las categorías</option>'
+                    ].concat(categories.map(function(option) {
+                        return '<option value="' + escapeHtml(option.value) + '">' + escapeHtml(option.label) + '</option>';
+                    })).join('');
+
+                    brandFilter.innerHTML = [
+                        '<option value="all">Todas las marcas</option>'
+                    ].concat(brands.map(function(option) {
+                        return '<option value="' + escapeHtml(option.value) + '">' + escapeHtml(option.label) + '</option>';
+                    })).join('');
+
+                    categoryFilter.value = categories.some(function(option) {
+                        return option.value === currentCategory;
+                    }) ? currentCategory : 'all';
+                    brandFilter.value = brands.some(function(option) {
+                        return option.value === currentBrand;
+                    }) ? currentBrand : 'all';
+                }
+
+                async function loadCatalogProducts() {
+                    catalogState.loading = true;
+                    catalogState.error = null;
+                    setCatalogMessage('Cargando catálogo', 'Sincronizando bicicletas desde WordPress...');
+                    updateCatalogSubtitle('Sincronizando bicicletas desde WordPress...');
+
+                    try {
+                        const response = await fetch('/api/catalog', {
+                            headers: {
+                                Accept: 'application/json'
+                            }
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('La API devolvió ' + response.status);
+                        }
+
+                        const payload = await response.json();
+                        const products = Array.isArray(payload.products) ? payload.products.map(mapWooProduct) : [];
+
+                        if (!products.length) {
+                            throw new Error('WordPress no devolvió productos');
+                        }
+
+                        inventory = products;
+                        catalogState.loading = false;
+                        catalogState.source = 'wordpress';
+                        catalogState.fetchedAt = payload.fetchedAt || null;
+                        populateProductFilters(inventory);
+                        updateCatalogSubtitle(products.length + ' bicicletas sincronizadas desde WordPress / WooCommerce');
+                        renderProducts();
+                    } catch (error) {
+                        console.error('No se pudo cargar el catálogo desde WordPress:', error);
+
+                        inventory = fallbackInventory.map(normalizeInventoryProduct);
+                        catalogState.loading = false;
+                        catalogState.source = 'static';
+                        catalogState.error = error.message;
+                        populateProductFilters(inventory);
+                        updateCatalogSubtitle('Mostrando catálogo local mientras WordPress responde de nuevo');
+                        renderProducts();
+                    }
+                }
+
+                inventory = fallbackInventory.map(normalizeInventoryProduct);
 
                 function setCartOpen(isOpen) {
                     if (!elements.cartSidebar || !elements.overlay) {
@@ -1936,6 +2296,11 @@
                         return;
                     }
 
+                    if (catalogState.loading) {
+                        setCatalogMessage('Cargando catálogo', 'Sincronizando bicicletas desde WordPress...');
+                        return;
+                    }
+
                     const categoryFilter = document.getElementById('categoryFilter');
                     const brandFilter = document.getElementById('brandFilter');
                     const priceFilter = document.getElementById('priceFilter');
@@ -1946,43 +2311,51 @@
 
                     const filteredProducts = inventory.filter(function(product) {
                         const matchesCategory = categoryValue === 'all' || product.category === categoryValue;
-                        const matchesBrand = brandValue === 'all' || product.brand === brandValue;
+                        const matchesBrand = brandValue === 'all' || product.brandSlug === brandValue || product.brand === brandValue;
 
                         let matchesPrice = true;
 
-                        if (priceValue === '0-3000') {
-                            matchesPrice = product.price <= 3000;
-                        } else if (priceValue === '3000-6000') {
-                            matchesPrice = product.price > 3000 && product.price <= 6000;
-                        } else if (priceValue === '6000+') {
-                            matchesPrice = product.price > 6000;
+                        if (priceValue === '0-10000') {
+                            matchesPrice = product.price <= 10000;
+                        } else if (priceValue === '10000-30000') {
+                            matchesPrice = product.price > 10000 && product.price <= 30000;
+                        } else if (priceValue === '30000+') {
+                            matchesPrice = product.price > 30000;
                         }
 
                         return matchesCategory && matchesBrand && matchesPrice;
                     });
 
+                    if (!filteredProducts.length) {
+                        setCatalogMessage('Sin resultados', 'No hay bicicletas que coincidan con los filtros seleccionados.');
+                        return;
+                    }
+
                     elements.productsGrid.innerHTML = filteredProducts.map(function(product, index) {
+                        const productName = escapeHtml(product.name);
+                        const productImage = escapeHtml(product.image || '');
+                        const productCategory = escapeHtml(product.categoryLabel || getCategoryName(product.category));
+                        const productDescription = escapeHtml(product.description || 'Consulta la ficha del producto para más información.');
+                        const productSpecs = (product.highlights || []).map(function(item) {
+                            return '<span class="spec">' + escapeHtml(item) + '</span>';
+                        }).join('');
+
                         return `
                             <div class="product-card animate-on-scroll delay-${(index % 6) + 1}">
                                 ${product.badge ? `<div class="product-badge ${product.badge}">${product.badge === 'new' ? 'NUEVO 2025' : 'OFERTA'}</div>` : ''}
                                 <div class="product-image-container">
                                     <img
-                                        src="${product.image}"
-                                        alt="${product.name}"
+                                        src="${productImage}"
+                                        alt="${productName}"
                                         class="product-image"
                                         onerror="window.turboBikeApp.replaceImageWithFallback(this, '🚲')"
                                     >
                                 </div>
                                 <div class="product-info">
-                                    <div class="product-category">${getCategoryName(product.category)}</div>
-                                    <h3 class="product-name">${product.name}</h3>
-                                    <div class="product-specs">
-                                        <span class="spec"><span class="spec-icon">⚡</span> ${product.motor}</span>
-                                        <span class="spec"><span class="spec-icon">🔋</span> ${product.battery}</span>
-                                        <span class="spec"><span class="spec-icon">💪</span> ${product.torque}</span>
-                                        <span class="spec"><span class="spec-icon">⚖️</span> ${product.weight}</span>
-                                    </div>
-                                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.4;">${product.description}</p>
+                                    <div class="product-category">${productCategory}</div>
+                                    <h3 class="product-name">${productName}</h3>
+                                    ${productSpecs ? `<div class="product-specs">${productSpecs}</div>` : ''}
+                                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.4;">${productDescription}</p>
                                     <div class="product-price">
                                         <span class="current-price">$${formatAmount(product.price)}</span>
                                         ${product.originalPrice ? `<span class="original-price">$${formatAmount(product.originalPrice)}</span>` : ''}
@@ -2500,17 +2873,21 @@
                         return;
                     }
 
+                    if (product.permalink) {
+                        window.open(product.permalink, '_blank', 'noopener,noreferrer');
+                        return;
+                    }
+
                     window.alert(
                         product.name + '\n\n' +
-                        'Motor: ' + product.motor + '\n' +
-                        'Batería: ' + product.battery + '\n' +
-                        'Torque: ' + product.torque + '\n' +
-                        'Peso: ' + product.weight + '\n\n' +
-                        product.description
+                        'Categoría: ' + (product.categoryLabel || getCategoryName(product.category)) + '\n' +
+                        (product.brandName ? 'Marca: ' + product.brandName + '\n' : '') +
+                        ((product.highlights || []).length ? '\n' + product.highlights.join('\n') + '\n' : '\n') +
+                        '\n' + (product.fullDescription || product.description)
                     );
                 }
 
-                function init() {
+                async function init() {
                     elements.productsGrid = document.getElementById('productsGrid');
                     elements.motoresGrid = document.getElementById('motoresGrid');
                     elements.bateriasGrid = document.getElementById('bateriasGrid');
@@ -2526,12 +2903,13 @@
                     elements.toast = document.getElementById('toast');
 
                     initHeroSlider();
-                    renderProducts();
+                    populateProductFilters(inventory);
                     renderMotores();
                     renderBaterias();
                     renderAccesorios();
                     updateCart();
                     initScrollAnimations();
+                    await loadCatalogProducts();
                 }
 
                 window.turboBikeApp = {
@@ -2564,13 +2942,13 @@
                     goToHeroSlide: goToHeroSlide
                 };
 
-                function safeInit() {
+                async function safeInit() {
                     if (window.turboBikeInitialized) {
                         return;
                     }
 
                     try {
-                        init();
+                        await init();
                         window.turboBikeInitialized = true;
                     } catch (error) {
                         window.turboBikeInitialized = false;
