@@ -776,6 +776,34 @@
             font-size: 0.92rem;
         }
 
+        .footer-bottom-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal-btn,
+        .footer-credit {
+            color: rgba(255, 255, 255, 0.84);
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal-btn:hover,
+        .footer-credit:hover {
+            color: var(--primary);
+        }
+
+        .footer-credit {
+            white-space: nowrap;
+        }
+
         .component-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1040,6 +1068,43 @@
             animation: modalPop 0.3s;
         }
 
+        .privacy-modal {
+            max-width: 860px;
+            width: min(92vw, 860px);
+        }
+
+        .privacy-content {
+            display: grid;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .privacy-section {
+            padding: 1rem 1.1rem;
+            border-radius: 12px;
+            border: 1px solid #e9edf3;
+            background: #fafbfd;
+        }
+
+        .privacy-section h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .privacy-section p + p,
+        .privacy-section ul + p {
+            margin-top: 0.75rem;
+        }
+
+        .privacy-list {
+            padding-left: 1.2rem;
+            display: grid;
+            gap: 0.45rem;
+        }
+
         @keyframes modalPop {
             from {
                 opacity: 0;
@@ -1222,6 +1287,10 @@
 
             .footer-bottom {
                 flex-direction: column;
+            }
+
+            .footer-bottom-links {
+                align-items: flex-start;
             }
         }
 
@@ -1465,7 +1534,10 @@
 
             <div class="footer-bottom">
                 <span>TurboBike • Diversión Máxima</span>
-                <span>© 2026 TurboBike. Diseño premium con footer a juego con el header.</span>
+                <div class="footer-bottom-links">
+                    <button class="footer-legal-btn" type="button" onclick="window.turboBikeApp.openPrivacyModal()">Aviso de Privacidad</button>
+                    <a class="footer-credit" href="https://o7digital.com" target="_blank" rel="noopener noreferrer">- created by o7digital.com</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -1539,6 +1611,69 @@
             </div>
             <button type="button" class="btn-confirm" onclick="window.turboBikeApp.processPayment()">Confirmar Pedido</button>
         </form>
+    </div>
+
+    <div class="overlay" id="privacyOverlay" onclick="window.turboBikeApp.closePrivacyModal()"></div>
+    <div class="modal privacy-modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
+        <div class="modal-header">
+            <h2 id="privacyModalTitle">Aviso de Privacidad</h2>
+            <button class="close-modal" onclick="window.turboBikeApp.closePrivacyModal()">✕</button>
+        </div>
+
+        <div class="privacy-content">
+            <section class="privacy-section">
+                <h3>1. Responsable del tratamiento</h3>
+                <p>All Easy Mkt S.A. de C.V. actúa como responsable del tratamiento de los datos personales recabados a través de este sitio, formularios, cookies, medios de contacto, carrito, procesos de pago y solicitudes comerciales o de soporte.</p>
+                <p>Este aviso aplica al tratamiento de datos de clientes, prospectos, visitantes y usuarios del sitio, conforme a la normativa aplicable en México, Estados Unidos, el Espacio Económico Europeo y otras jurisdicciones donde resulte exigible.</p>
+                <p>Los medios específicos de contacto del responsable, incluyendo domicilio y canal de privacidad, podrán publicarse o actualizarse en este sitio para atención de solicitudes y requerimientos regulatorios.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h3>2. Datos personales que podemos tratar</h3>
+                <ul class="privacy-list">
+                    <li>Datos de identificación y contacto, como nombre, correo electrónico, teléfono y datos que usted comparta voluntariamente.</li>
+                    <li>Datos transaccionales, de pedido, facturación, pago, carrito, historial de compras y preferencias comerciales.</li>
+                    <li>Datos técnicos y de navegación, como dirección IP, identificadores de dispositivo, navegador, páginas visitadas, eventos de interacción y cookies o tecnologías similares.</li>
+                    <li>Datos necesarios para atención al cliente, prevención de fraude, seguridad del sitio, cumplimiento normativo y mejora del servicio.</li>
+                </ul>
+            </section>
+
+            <section class="privacy-section">
+                <h3>3. Finalidades del tratamiento</h3>
+                <ul class="privacy-list">
+                    <li>Gestionar compras, pagos, envíos, devoluciones, facturación y atención postventa.</li>
+                    <li>Responder consultas, solicitudes comerciales, soporte y ejercer derechos de privacidad.</li>
+                    <li>Operar, administrar, proteger y mejorar el sitio, así como medir su desempeño.</li>
+                    <li>Enviar comunicaciones operativas y, cuando proceda, marketing o promociones con posibilidad de baja.</li>
+                    <li>Cumplir obligaciones legales, fiscales, regulatorias, contractuales y de seguridad.</li>
+                </ul>
+            </section>
+
+            <section class="privacy-section">
+                <h3>4. Marco normativo aplicable</h3>
+                <p><strong>México.</strong> El tratamiento se realiza conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares y su Reglamento. Los titulares podrán solicitar acceso, rectificación, cancelación u oposición, así como revocar consentimiento cuando proceda, por los medios de contacto publicados en este sitio o por el canal de privacidad que el responsable habilite.</p>
+                <p><strong>Estados Unidos.</strong> Cuando resulte aplicable, se observarán obligaciones de transparencia y derechos previstos por leyes estatales de privacidad del consumidor, incluidas solicitudes de acceso, corrección, eliminación, portabilidad y, en ciertos estados, exclusión de venta, intercambio o publicidad dirigida.</p>
+                <p><strong>RGPD / EEE.</strong> Para personas ubicadas en el Espacio Económico Europeo, el tratamiento se apoya en bases jurídicas como ejecución de contrato, cumplimiento de obligaciones legales, interés legítimo y, cuando corresponda, consentimiento. Podrán ejercerse derechos de acceso, rectificación, supresión, limitación, portabilidad, oposición y retiro del consentimiento, además del derecho a presentar reclamación ante la autoridad de control competente.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h3>5. Cookies y tecnologías similares</h3>
+                <p>Este sitio puede utilizar cookies estrictamente necesarias, de análisis, rendimiento, personalización, seguridad y, en su caso, publicidad o medición. Las cookies necesarias permiten funciones esenciales del sitio; las demás se emplean para comprender el uso del sitio, mejorar la experiencia y medir campañas o contenidos.</p>
+                <p>Cuando la normativa aplicable lo exija, las cookies no esenciales se activarán con base en su consentimiento. Usted puede administrar cookies desde las herramientas del sitio, si están disponibles, o desde la configuración de su navegador. La desactivación de ciertas cookies puede afectar algunas funciones.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h3>6. Transferencias, conservación y seguridad</h3>
+                <p>Los datos podrán compartirse con proveedores tecnológicos, pasarelas de pago, servicios de alojamiento, analítica, mensajería, prevención de fraude, soporte y autoridades cuando exista fundamento legal o sea necesario para prestar el servicio. En su caso, podrán existir transferencias internacionales sujetas a mecanismos contractuales o salvaguardas apropiadas.</p>
+                <p>Los datos se conservarán sólo durante el tiempo necesario para cumplir las finalidades descritas, obligaciones legales, resolver controversias, auditorías, seguridad, prevención de fraude y defensa de derechos. El responsable implementa medidas administrativas, técnicas y físicas razonables para proteger la información frente a pérdida, uso indebido, acceso no autorizado, alteración o divulgación indebida.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h3>7. Ejercicio de derechos y cambios al aviso</h3>
+                <p>Las solicitudes relacionadas con derechos de privacidad, incluidas ARCO, derechos equivalentes en EE.UU. o derechos del RGPD, podrán enviarse mediante los canales de contacto publicados en este sitio y deberán incluir información suficiente para identificar al titular, describir la solicitud y acreditar, cuando corresponda, identidad o representación. El responsable responderá conforme a los plazos y requisitos aplicables en cada jurisdicción.</p>
+                <p>Este aviso puede actualizarse por cambios legales, regulatorios, operativos o tecnológicos. La versión vigente será la publicada en este sitio. Si se realizan cambios materiales, se comunicarán por los medios razonablemente disponibles conforme a la normativa aplicable.</p>
+            </section>
+        </div>
     </div>
 
     <div class="toast" id="toast">✅ Producto agregado al carrito</div>
@@ -1948,6 +2083,8 @@
                     overlay: null,
                     paymentModal: null,
                     paymentOverlay: null,
+                    privacyModal: null,
+                    privacyOverlay: null,
                     paymentForm: null,
                     toast: null
                 };
@@ -2345,6 +2482,30 @@
 
                     if (elements.paymentOverlay) {
                         elements.paymentOverlay.classList.remove('active');
+                    }
+                }
+
+                function closePrivacyModal() {
+                    if (elements.privacyModal) {
+                        elements.privacyModal.classList.remove('active');
+                    }
+
+                    if (elements.privacyOverlay) {
+                        elements.privacyOverlay.classList.remove('active');
+                    }
+                }
+
+                function openPrivacyModal() {
+                    setCartOpen(false);
+                    closePaymentModal();
+                    closeConfirmationModal();
+
+                    if (elements.privacyModal) {
+                        elements.privacyModal.classList.add('active');
+                    }
+
+                    if (elements.privacyOverlay) {
+                        elements.privacyOverlay.classList.add('active');
                     }
                 }
 
@@ -3092,6 +3253,8 @@
                     elements.overlay = document.getElementById('overlay');
                     elements.paymentModal = document.getElementById('paymentModal');
                     elements.paymentOverlay = document.getElementById('paymentOverlay');
+                    elements.privacyModal = document.getElementById('privacyModal');
+                    elements.privacyOverlay = document.getElementById('privacyOverlay');
                     elements.paymentForm = document.getElementById('paymentForm');
                     elements.toast = document.getElementById('toast');
 
@@ -3118,6 +3281,8 @@
                     toggleCart: toggleCart,
                     openPaymentModal: openPaymentModal,
                     closePaymentModal: closePaymentModal,
+                    openPrivacyModal: openPrivacyModal,
+                    closePrivacyModal: closePrivacyModal,
                     selectPayment: selectPayment,
                     processPayment: processPayment,
                     processPayPalPayment: processPayPalPayment,
