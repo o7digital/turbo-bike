@@ -479,6 +479,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .product-card:hover {
@@ -528,6 +531,9 @@
 
         .product-info {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .product-category {
@@ -545,13 +551,20 @@
             color: var(--secondary);
             margin-bottom: 0.5rem;
             line-height: 1.3;
+            min-height: calc(1.3em * 2);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .product-specs {
-            display: flex;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
+            min-height: 92px;
+            align-content: start;
         }
 
         .spec {
@@ -563,6 +576,10 @@
             background: var(--light);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .spec-icon {
@@ -574,6 +591,8 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
         }
 
         .current-price {
@@ -591,6 +610,18 @@
         .product-actions {
             display: flex;
             gap: 0.5rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            min-height: calc(1.4em * 3);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .btn-add-cart {
@@ -2355,7 +2386,7 @@
                                     <div class="product-category">${productCategory}</div>
                                     <h3 class="product-name">${productName}</h3>
                                     ${productSpecs ? `<div class="product-specs">${productSpecs}</div>` : ''}
-                                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.4;">${productDescription}</p>
+                                    <p class="product-description">${productDescription}</p>
                                     <div class="product-price">
                                         <span class="current-price">$${formatAmount(product.price)}</span>
                                         ${product.originalPrice ? `<span class="original-price">$${formatAmount(product.originalPrice)}</span>` : ''}
