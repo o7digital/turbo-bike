@@ -1,6 +1,10 @@
+const fs = require('node:fs/promises');
+const path = require('node:path');
+
 const WOO_PRODUCTS_ENDPOINT = 'https://divertibici.com.mx/wp-json/wc/store/v1/products';
 const BIKES_CATEGORY_ID = '17';
 const PRODUCTS_PER_PAGE = '100';
+const LOCAL_BACKUP_CATALOG_PATH = path.join(__dirname, '..', 'backup', 'woocommerce-catalog.json');
 
 async function fetchProductsPage(page) {
     const endpoint = new URL(WOO_PRODUCTS_ENDPOINT);
@@ -31,7 +35,32 @@ async function fetchProductsPage(page) {
     };
 }
 
+async function readLocalBackupCatalog() {
+    try {
+        const fileContents = await fs.readFile(LOCAL_BACKUP_CATALOG_PATH, 'utf8');
+        const catalog = JSON.parse(fileContents);
+
+        if (!catalog || !Array.isArray(catalog.products)) {
+            throw new Error('Invalid local backup catalog format');
+        }
+
+        return catalog;
+    } catch (error) {
+        if (error && error.code === 'ENOENT') {
+            return null;
+        }
+
+        throw error;
+    }
+}
+
 async function fetchCatalog() {
+    const localBackupCatalog = await readLocalBackupCatalog();
+
+    if (localBackupCatalog) {
+        return localBackupCatalog;
+    }
+
     const firstPage = await fetchProductsPage(1);
     const allProducts = firstPage.products.slice();
 
@@ -75,3 +104,4 @@ module.exports = async function handler(req, res) {
 };
 
 module.exports.fetchCatalog = fetchCatalog;
+module.exports.readLocalBackupCatalog = readLocalBackupCatalog;

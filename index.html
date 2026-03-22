@@ -2436,12 +2436,16 @@
                             throw new Error('WordPress no devolvió productos');
                         }
 
+                        const sourceLabel = payload.source === 'wordpress-backup'
+                            ? 'la copia local de WordPress / WooCommerce'
+                            : 'WordPress / WooCommerce';
+
                         inventory = products;
                         catalogState.loading = false;
-                        catalogState.source = 'wordpress';
+                        catalogState.source = payload.source || 'wordpress';
                         catalogState.fetchedAt = payload.fetchedAt || null;
                         populateProductFilters(inventory);
-                        updateCatalogSubtitle(products.length + ' bicicletas sincronizadas desde WordPress / WooCommerce');
+                        updateCatalogSubtitle(products.length + ' bicicletas cargadas desde ' + sourceLabel);
                         renderProducts();
                     } catch (error) {
                         console.error('No se pudo cargar el catálogo desde WordPress:', error);
