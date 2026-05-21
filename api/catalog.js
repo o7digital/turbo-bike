@@ -1,4 +1,4 @@
-const WOO_PRODUCTS_ENDPOINT = 'https://divertibici.com.mx/wp-json/wc/store/v1/products';
+const WOO_PRODUCTS_ENDPOINT = 'https://tienda.divertibici.com.mx/wp-json/wc/store/v1/products';
 const BIKES_CATEGORY_ID = '17';
 const PRODUCTS_PER_PAGE = '100';
 

@@ -451,8 +451,9 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 2rem;
+            align-items: stretch;
         }
 
         .catalog-feedback {
@@ -806,8 +807,9 @@
 
         .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 2rem;
+            align-items: stretch;
         }
 
         .component-card {
@@ -817,6 +819,9 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .component-card:hover {
@@ -866,6 +871,7 @@
             font-size: 0.9rem;
             line-height: 1.5;
             margin-bottom: 1.5rem;
+            min-height: calc(1.5em * 3);
         }
 
         .btn-component {
@@ -878,6 +884,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            margin-top: auto;
         }
 
         .btn-component:hover {
@@ -1294,6 +1301,13 @@
             }
         }
 
+        @media (min-width: 769px) and (max-width: 1300px) {
+            .products-grid,
+            .component-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
         .empty-cart {
             text-align: center;
             padding: 3rem 1rem;
@@ -1384,7 +1398,7 @@
                         <li><a href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;">Accesorios</a></li>
                     </ul>
                 </nav>
-                <div class="cart-icon" onclick="window.turboBikeApp.toggleCart()">
+                <div class="cart-icon" onclick="window.turboBikeApp.toggleCart()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.turboBikeApp.toggleCart(); }" role="button" tabindex="0" aria-label="Bolsa de compras">
                     🛒
                     <span class="cart-count" id="cartCount">0</span>
                 </div>
@@ -1392,7 +1406,7 @@
         </div>
     </header>
 
-    <section class="hero" id="inicio" aria-label="Hero promocional TurboBike">
+    <section class="hero" id="inicio" aria-label="Promoción principal TurboBike">
         <div class="hero-slide active" data-hero-slide style="--hero-image: url('https://divertibici.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fhome%2Fdemo16%2Fbici1.jpg&w=3840&q=75');">
             <div class="container hero-inner">
                 <div class="hero-copy">
@@ -1417,13 +1431,13 @@
                 </div>
             </div>
         </div>
-        <div class="hero-nav" aria-label="Navigation du hero">
-            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.prevHeroSlide()" aria-label="Slide précédente">‹</button>
-            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.nextHeroSlide()" aria-label="Slide suivante">›</button>
+        <div class="hero-nav" aria-label="Navegación de la promoción principal">
+            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.prevHeroSlide()" aria-label="Promoción anterior">‹</button>
+            <button type="button" class="hero-arrow" onclick="window.turboBikeApp.nextHeroSlide()" aria-label="Promoción siguiente">›</button>
         </div>
-        <div class="hero-dots" aria-label="Sélection des slides">
-            <button type="button" class="hero-dot active" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(0)" aria-label="Afficher le hero 1" aria-pressed="true"></button>
-            <button type="button" class="hero-dot" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(1)" aria-label="Afficher le hero 2" aria-pressed="false"></button>
+        <div class="hero-dots" aria-label="Selección de promociones">
+            <button type="button" class="hero-dot active" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(0)" aria-label="Mostrar promoción 1" aria-pressed="true"></button>
+            <button type="button" class="hero-dot" data-hero-dot onclick="window.turboBikeApp.goToHeroSlide(1)" aria-label="Mostrar promoción 2" aria-pressed="false"></button>
         </div>
     </section>
 
@@ -1505,7 +1519,7 @@
                         Catálogo premium de bicicletas, motores, baterías y accesorios con la misma energía visual que el resto de la tienda.
                     </p>
                     <div class="footer-badges">
-                        <span class="footer-badge">WooCommerce Live</span>
+                        <span class="footer-badge">WooCommerce en vivo</span>
                         <span class="footer-badge">PayPal / OXXO / SPEI</span>
                         <span class="footer-badge">Catálogo Premium</span>
                     </div>
@@ -1536,7 +1550,7 @@
                 <span>TurboBike • Diversión Máxima</span>
                 <div class="footer-bottom-links">
                     <button class="footer-legal-btn" type="button" onclick="window.turboBikeApp.openPrivacyModal()">Aviso de Privacidad</button>
-                    <a class="footer-credit" href="https://o7digital.com" target="_blank" rel="noopener noreferrer">- created by o7digital.com</a>
+                    <a class="footer-credit" href="https://o7digital.com" target="_blank" rel="noopener noreferrer">- creado por o7digital.com</a>
                 </div>
             </div>
         </div>
@@ -1741,7 +1755,7 @@
                         battery: '580Wh',
                         torque: '50Nm',
                         weight: '19.5kg',
-                        description: 'E-enduro ligero con suspensión high-pivot. Silencioso y natural en el pedaleo.'
+                        description: 'E-enduro ligero con suspensión de pivote alto. Silencioso y natural en el pedaleo.'
                     },
                     {
                         id: 5,
@@ -1756,7 +1770,7 @@
                         battery: '601Wh',
                         torque: '85Nm',
                         weight: '20.4kg',
-                        description: 'Full power sin el peso completo. Flex-pivot y geometría específica por talla.'
+                        description: 'Máxima potencia sin el peso completo. Pivote flexible y geometría específica por talla.'
                     },
                     {
                         id: 6,
@@ -1813,7 +1827,7 @@
                         battery: '500Wh',
                         torque: '75Nm',
                         weight: '23.5kg',
-                        description: 'Commuter robusto con certificación UL. Ideal para trayectos diarios largos.'
+                        description: 'Bicicleta urbana robusta con certificación UL. Ideal para trayectos diarios largos.'
                     },
                     {
                         id: 10,
@@ -1869,7 +1883,7 @@
                         weight: '2.9kg',
                         image: 'https://flowmountainbike.com/wp-content/uploads/2024/09/Bosch-eBike-Systems_Performance-Line-CX_Press-photo-2.jpg',
                         description: 'El motor más potente de Bosch. 85Nm de torque y máxima eficiencia energética.',
-                        features: ['4 modos de asistencia', 'App connectivity', 'Ultra silencioso']
+                        features: ['4 modos de asistencia', 'Conectividad con app', 'Ultra silencioso']
                     },
                     {
                         id: 102,
@@ -1880,7 +1894,7 @@
                         weight: '2.7kg',
                         image: 'https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICComponent/cg3SHICDriveUnit/cg4SHICDriveUnit/DU-EP801-shic260-primary_1.jpg/jcr:content/renditions/DU-EP801-shic260-primary_1_750_750.jpeg',
                         description: 'Motor Shimano de última generación. Suave, potente y fiable.',
-                        features: ['Auto Shift', 'Walk Assist', 'Di2 compatible']
+                        features: ['Cambio automático', 'Asistencia al caminar', 'Compatible con Di2']
                     },
                     {
                         id: 103,
@@ -1960,7 +1974,7 @@
                         weight: '1.0kg',
                         image: 'https://assets.specialized.com/i/specialized/48119-710_RANGE-EXTENDER-BATTERY-SL-HP-BLK_HERO?$scom-pdp-gallery-image$&fmt=auto',
                         description: 'Batería adicional para aumentar la autonomía. Se monta en el portabultos.',
-                        features: ['160Wh extra', 'Plug & play', 'Compatible Levo/SL']
+                        features: ['160Wh extra', 'Conectar y usar', 'Compatible Levo/SL']
                     },
                     {
                         id: 204,
@@ -2014,7 +2028,7 @@
                         price: 400,
                         image: 'https://media.wired.com/photos/653acaab8ccf6086f40686d4/1:1/w_1352,h_1352,c_limit/GoPro-Hero-12-Featured-Gear.jpg',
                         description: 'Cámara de acción 5.3K. Ideal para capturar tus aventuras en bici.',
-                        features: ['5.3K60 video', 'HyperSmooth 6.0', 'Resistente al agua']
+                        features: ['Video 5.3K60', 'Estabilización HyperSmooth 6.0', 'Resistente al agua']
                     },
                     {
                         id: 303,
@@ -2023,7 +2037,7 @@
                         price: 180,
                         image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
                         description: 'Candado plegable con alarma de 100dB. Máxima seguridad para tu e-bike.',
-                        features: ['Alarma 100dB', '5 barras de acero', 'Smart alarm']
+                        features: ['Alarma 100dB', '5 barras de acero', 'Alarma inteligente']
                     },
                     {
                         id: 304,
@@ -2147,10 +2161,10 @@
 
                 function getCategoryName(category) {
                     const names = {
-                        'emtb-full': 'E-MTB Full Power',
-                        'emtb-light': 'E-MTB Lightweight',
-                        urban: 'Urbana / Commuter',
-                        gravel: 'Gravel / Road',
+                        'emtb-full': 'E-MTB máxima potencia',
+                        'emtb-light': 'E-MTB ligera',
+                        urban: 'Urbana',
+                        gravel: 'Gravel / Ruta',
                         cargo: 'Cargo',
                         bicicletas: 'Bicicletas',
                         'bicicletas-electricas': 'Bicicletas Eléctricas',
