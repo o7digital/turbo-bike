@@ -451,8 +451,9 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 2rem;
+            align-items: stretch;
         }
 
         .catalog-feedback {
@@ -806,8 +807,9 @@
 
         .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 2rem;
+            align-items: stretch;
         }
 
         .component-card {
@@ -817,6 +819,9 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .component-card:hover {
@@ -866,6 +871,7 @@
             font-size: 0.9rem;
             line-height: 1.5;
             margin-bottom: 1.5rem;
+            min-height: calc(1.5em * 3);
         }
 
         .btn-component {
@@ -878,6 +884,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            margin-top: auto;
         }
 
         .btn-component:hover {
@@ -1291,6 +1298,13 @@
 
             .footer-bottom-links {
                 align-items: flex-start;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1300px) {
+            .products-grid,
+            .component-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
             }
         }
 
