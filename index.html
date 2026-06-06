@@ -3,34 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DivertiBici - Bicicletas Eléctricas Premium</title>
-    <meta name="description" content="Compra bicicletas eléctricas premium, motores, baterías y accesorios en DivertiBici. Catálogo actualizado con precios en MXN y atención personalizada en México.">
+    <title>DivertiBici - Bicicletas eléctricas premium en México</title>
+    <meta name="description" content="Compra bicicletas eléctricas premium en México: e-bikes urbanas, de montaña, motores, baterías y accesorios. Catálogo actualizado, precios en MXN y asesoría especializada.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://www.divertibici.com.mx/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_MX">
     <meta property="og:site_name" content="DivertiBici">
-    <meta property="og:title" content="DivertiBici - Bicicletas Eléctricas Premium">
-    <meta property="og:description" content="Catálogo premium de bicicletas eléctricas, motores, baterías y accesorios con precios sincronizados.">
+    <meta property="og:title" content="DivertiBici - Bicicletas eléctricas premium en México">
+    <meta property="og:description" content="Catálogo de bicicletas eléctricas premium, e-bikes urbanas y de montaña, motores, baterías y accesorios con precios en MXN.">
     <meta property="og:url" content="https://www.divertibici.com.mx/">
     <meta property="og:image" content="https://www.divertibici.com.mx/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DivertiBici - Bicicletas Eléctricas Premium">
-    <meta name="twitter:description" content="Catálogo premium de bicicletas eléctricas, motores, baterías y accesorios con precios sincronizados.">
+    <meta name="twitter:title" content="DivertiBici - Bicicletas eléctricas premium en México">
+    <meta name="twitter:description" content="Catálogo de bicicletas eléctricas premium, e-bikes urbanas y de montaña, motores, baterías y accesorios con precios en MXN.">
     <meta name="twitter:image" content="https://www.divertibici.com.mx/og-image.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "Store",
+            "@type": "SportingGoodsStore",
             "name": "DivertiBici",
             "url": "https://www.divertibici.com.mx/",
-            "description": "Tienda de bicicletas eléctricas premium, motores, baterías y accesorios.",
+            "description": "Tienda de bicicletas eléctricas premium en México: e-bikes urbanas, bicicletas eléctricas de montaña, motores, baterías y accesorios.",
             "image": "https://www.divertibici.com.mx/og-image.jpg",
+            "priceRange": "$$",
             "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "MX"
             }
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "¿Qué bicicleta eléctrica conviene para ciudad?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Para uso urbano conviene una e-bike con postura cómoda, buena autonomía, frenos confiables y espacio para accesorios como luces, parrilla o guardabarros. La elección final depende de distancia diaria, pendientes y presupuesto."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "¿Qué debo revisar antes de comprar una bicicleta eléctrica?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Revisa autonomía, tipo de motor, capacidad de batería, talla, peso total, frenos, garantía, disponibilidad de refacciones y compatibilidad con accesorios."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "¿DivertiBici vende motores, baterías y accesorios?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sí. DivertiBici ofrece bicicletas eléctricas, motores, baterías y accesorios para mejorar autonomía, seguridad, comodidad y desempeño."
+                    }
+                }
+            ]
         }
     </script>
     <style>
@@ -475,6 +508,72 @@
         .section-title p {
             color: var(--text-light);
             font-size: 1.1rem;
+        }
+
+        .seo-section {
+            padding: 4rem 0;
+            background: white;
+            border-top: 1px solid #e7e9ee;
+        }
+
+        .seo-section.alt {
+            background: var(--light);
+        }
+
+        .seo-copy {
+            max-width: 920px;
+            margin: 0 auto 2rem;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .seo-card,
+        .faq-item {
+            background: white;
+            border: 1px solid #e7e9ee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .seo-section:not(.alt) .seo-card {
+            background: #fafbfd;
+        }
+
+        .seo-card h3,
+        .faq-item h3 {
+            color: var(--secondary);
+            font-size: 1.15rem;
+            margin-bottom: 0.65rem;
+            line-height: 1.35;
+        }
+
+        .seo-card p,
+        .faq-item p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .seo-list {
+            margin-top: 0.75rem;
+            padding-left: 1.1rem;
+            color: var(--text-light);
+            display: grid;
+            gap: 0.4rem;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
         }
 
         .products-grid {
@@ -1292,7 +1391,9 @@
             }
 
             .products-grid,
-            .component-grid {
+            .component-grid,
+            .seo-grid,
+            .faq-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1423,6 +1524,7 @@
                         <li><a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;">Catálogo</a></li>
                         <li><a href="#motores" onclick="window.turboBikeApp.scrollToSection('motores'); return false;">Motores</a></li>
                         <li><a href="#baterias" onclick="window.turboBikeApp.scrollToSection('baterias'); return false;">Baterías</a></li>
+                        <li><a href="#guia-bicicletas-electricas" onclick="window.turboBikeApp.scrollToSection('guia-bicicletas-electricas'); return false;">Guía</a></li>
                         <li><a href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;">Accesorios</a></li>
                     </ul>
                 </nav>
@@ -1439,8 +1541,8 @@
             <div class="container hero-inner">
                 <div class="hero-copy">
                     <div class="hero-eyebrow">TurboBike Premium</div>
-                    <h2 class="hero-title">Potencia tu <span>Aventura</span></h2>
-                    <p class="hero-description">Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
+                    <h1 class="hero-title">Bicicletas eléctricas <span>premium</span> en México</h1>
+                    <p class="hero-description">E-bikes urbanas y de montaña, motores, baterías y accesorios para moverte con más autonomía, potencia y confianza.</p>
                     <div class="hero-actions">
                         <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button secondary">Ver Catálogo</a>
                     </div>
@@ -1451,7 +1553,7 @@
             <div class="container hero-inner">
                 <div class="hero-copy">
                     <div class="hero-eyebrow">TurboBike Premium</div>
-                    <h1 class="hero-title">Potencia tu <span>Aventura</span></h1>
+                    <h2 class="hero-title">Potencia tu <span>Aventura</span></h2>
                     <p class="hero-description">Bicicletas eléctricas premium de última generación. Tecnología de punta, diseño italiano y rendimiento profesional.</p>
                     <div class="hero-actions">
                         <a href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;" class="hero-button secondary">Ver Catálogo</a>
@@ -1538,6 +1640,123 @@
         </div>
     </section>
 
+    <section class="seo-section" id="guia-bicicletas-electricas">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>Guía para comprar bicicletas eléctricas</h2>
+                <p>Cómo elegir una e-bike para ciudad, montaña o trayectos mixtos en México</p>
+            </div>
+            <p class="seo-copy animate-on-scroll delay-1">
+                Una bicicleta eléctrica no se elige solo por el precio. La autonomía, el tipo de motor, la talla del cuadro,
+                la capacidad de la batería y el uso real determinan si una e-bike será cómoda para todos los días o potente
+                para rutas exigentes. En DivertiBici reunimos bicicletas eléctricas premium, componentes y accesorios para
+                que puedas comparar opciones con información clara antes de comprar.
+            </p>
+            <div class="seo-grid">
+                <article class="seo-card animate-on-scroll delay-2">
+                    <h3>Bicicleta eléctrica urbana</h3>
+                    <p>
+                        Ideal para traslados diarios, pendientes moderadas y recorridos con paradas frecuentes. Prioriza una
+                        postura cómoda, luces, frenos seguros, buena autonomía y compatibilidad con parrillas o guardabarros.
+                    </p>
+                </article>
+                <article class="seo-card animate-on-scroll delay-3">
+                    <h3>E-bike de montaña</h3>
+                    <p>
+                        Para senderos y rutas irregulares conviene revisar suspensión, torque del motor, tracción, peso total,
+                        resistencia del cuadro y capacidad de batería para mantener asistencia constante durante el recorrido.
+                    </p>
+                </article>
+                <article class="seo-card animate-on-scroll delay-4">
+                    <h3>Motores, baterías y accesorios</h3>
+                    <p>
+                        Un buen sistema eléctrico mejora la experiencia completa. Compara potencia, autonomía, conectores,
+                        compatibilidad y disponibilidad de refacciones antes de actualizar tu bicicleta o elegir accesorios.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-section alt" id="consejos-ebike">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>Qué revisar antes de comprar una e-bike</h2>
+                <p>Factores clave para tomar una mejor decisión</p>
+            </div>
+            <div class="seo-grid">
+                <article class="seo-card animate-on-scroll delay-1">
+                    <h3>Autonomía y batería</h3>
+                    <p>
+                        La autonomía depende de la capacidad de la batería, peso del ciclista, pendientes, presión de llantas y
+                        nivel de asistencia. Para uso diario, considera margen extra sobre tu distancia habitual.
+                    </p>
+                    <ul class="seo-list">
+                        <li>Capacidad de batería y cargador incluido.</li>
+                        <li>Disponibilidad de reemplazos compatibles.</li>
+                        <li>Tiempo de carga y garantía.</li>
+                    </ul>
+                </article>
+                <article class="seo-card animate-on-scroll delay-2">
+                    <h3>Motor y asistencia</h3>
+                    <p>
+                        El motor debe responder al terreno. Para ciudad importa la suavidad; para montaña, el torque y la
+                        entrega de potencia en subidas. Revisa también modos de asistencia y mantenimiento.
+                    </p>
+                    <ul class="seo-list">
+                        <li>Tipo de motor y potencia nominal.</li>
+                        <li>Torque para pendientes.</li>
+                        <li>Compatibilidad con controles y display.</li>
+                    </ul>
+                </article>
+                <article class="seo-card animate-on-scroll delay-3">
+                    <h3>Seguridad y confort</h3>
+                    <p>
+                        Frenos, llantas, suspensión, talla y postura hacen la diferencia en recorridos largos. Una e-bike bien
+                        elegida reduce fatiga y mejora el control en ciudad, carretera o montaña.
+                    </p>
+                    <ul class="seo-list">
+                        <li>Frenos adecuados al peso y velocidad.</li>
+                        <li>Talla correcta del cuadro.</li>
+                        <li>Luces, casco, candado y accesorios.</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-section" id="preguntas-frecuentes">
+        <div class="container">
+            <div class="section-title animate-on-scroll">
+                <h2>Preguntas frecuentes sobre bicicletas eléctricas</h2>
+                <p>Respuestas rápidas para comparar mejor antes de comprar</p>
+            </div>
+            <div class="faq-grid">
+                <article class="faq-item animate-on-scroll delay-1">
+                    <h3>¿Qué bicicleta eléctrica conviene para ciudad?</h3>
+                    <p>
+                        Para ciudad conviene una e-bike cómoda, estable, con buena autonomía, frenos confiables y accesorios
+                        de seguridad. La distancia diaria y las pendientes definen la batería y el motor recomendados.
+                    </p>
+                </article>
+                <article class="faq-item animate-on-scroll delay-2">
+                    <h3>¿Cuánto dura la batería de una e-bike?</h3>
+                    <p>
+                        Depende de capacidad, terreno, peso, velocidad y modo de asistencia. Lo correcto es comparar la autonomía
+                        estimada con tu ruta real y considerar un margen para subidas o viento.
+                    </p>
+                </article>
+                <article class="faq-item animate-on-scroll delay-3">
+                    <h3>¿También venden componentes?</h3>
+                    <p>
+                        Sí. Además de bicicletas eléctricas, DivertiBici ofrece motores, baterías y accesorios para mejorar
+                        autonomía, seguridad, comodidad y desempeño.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
@@ -1561,6 +1780,8 @@
                         <a class="footer-link" href="#motores" onclick="window.turboBikeApp.scrollToSection('motores'); return false;">Motores</a>
                         <a class="footer-link" href="#baterias" onclick="window.turboBikeApp.scrollToSection('baterias'); return false;">Baterías</a>
                         <a class="footer-link" href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;">Accesorios</a>
+                        <a class="footer-link" href="#guia-bicicletas-electricas" onclick="window.turboBikeApp.scrollToSection('guia-bicicletas-electricas'); return false;">Guía de compra</a>
+                        <a class="footer-link" href="/about/">Quiénes somos</a>
                     </div>
                 </div>
 
