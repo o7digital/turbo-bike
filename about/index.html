@@ -135,6 +135,48 @@
       gap: 1rem;
       margin-bottom: 2rem;
     }
+    .manifesto {
+      background: linear-gradient(135deg, #121827 0%, #263348 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .manifesto h2 {
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .manifesto p { color: #d7deea; max-width: 920px; }
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .step {
+      background: #fff;
+      border: 1px solid #ececf1;
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+    .step span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: .7rem;
+    }
+    .step h3 {
+      font-family: 'Exo 2', sans-serif;
+      margin-bottom: .45rem;
+    }
+    .step p { color: var(--muted); }
 
     .newsletter {
       background: #10131b;
@@ -196,7 +238,7 @@
     @media (max-width: 920px) {
       nav ul { gap: 1rem; font-size: .95rem; }
       .grid { grid-template-columns: 1fr; }
-      .benefits, .service-grid { grid-template-columns: 1fr; }
+      .benefits, .service-grid, .process { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .hero, .newsletter { padding: 1.4rem; }
     }
@@ -286,6 +328,15 @@
         </p>
       </section>
 
+      <section class="manifesto">
+        <h2>No vendemos solo bicicletas: diseñamos decisiones</h2>
+        <p>
+          Una buena e-bike cambia rutinas: reduce tiempos, abre rutas nuevas y convierte una subida pesada en una parte natural
+          del camino. Por eso DivertiBici trabaja como curador de movilidad eléctrica: filtramos ruido, comparamos tecnología y
+          traducimos especificaciones técnicas en decisiones simples para personas que quieren comprar bien desde la primera vez.
+        </p>
+      </section>
+
       <section class="service-grid" aria-label="Asesoría DivertiBici">
         <article class="benefit">
           <h4>Asesoría de compra</h4>
@@ -298,6 +349,29 @@
         <article class="benefit">
           <h4>Accesorios útiles</h4>
           <p>Luces, seguridad, carga, confort y componentes para mejorar tu experiencia diaria.</p>
+        </article>
+      </section>
+
+      <section class="process" aria-label="Proceso de compra DivertiBici">
+        <article class="step">
+          <span>1</span>
+          <h3>Entendemos tu ruta</h3>
+          <p>Ciudad, montaña, gravel, distancia diaria, pendientes y forma de uso.</p>
+        </article>
+        <article class="step">
+          <span>2</span>
+          <h3>Comparamos opciones</h3>
+          <p>Motor, batería, talla, peso, frenos, suspensión y accesorios compatibles.</p>
+        </article>
+        <article class="step">
+          <span>3</span>
+          <h3>Elegimos con criterio</h3>
+          <p>Priorizamos lo que aporta valor real, no lo que solo se ve bien en una ficha.</p>
+        </article>
+        <article class="step">
+          <span>4</span>
+          <h3>Acompañamos después</h3>
+          <p>La compra no termina en el carrito: una e-bike necesita soporte, cuidado y refacciones.</p>
         </article>
       </section>
 

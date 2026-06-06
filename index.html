@@ -576,6 +576,41 @@
             gap: 1.25rem;
         }
 
+        .static-products {
+            margin-top: 2rem;
+        }
+
+        .static-product-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .static-product {
+            background: #fff;
+            border: 1px solid #e7e9ee;
+            border-radius: 12px;
+            padding: 1.2rem;
+        }
+
+        .static-product h3 {
+            color: var(--secondary);
+            font-size: 1.05rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .static-product p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .static-product strong {
+            display: block;
+            color: var(--primary);
+            margin-top: 0.65rem;
+        }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1393,7 +1428,8 @@
             .products-grid,
             .component-grid,
             .seo-grid,
-            .faq-grid {
+            .faq-grid,
+            .static-product-list {
                 grid-template-columns: 1fr;
             }
 
@@ -1607,6 +1643,59 @@
                 <p id="catalogSubtitle">Bicicletas sincronizadas con WordPress / WooCommerce</p>
             </div>
             <div class="products-grid" id="productsGrid"></div>
+            <div class="static-products" aria-label="Productos destacados indexables">
+                <div class="section-title animate-on-scroll">
+                    <h2>Bicicletas eléctricas destacadas</h2>
+                    <p>Modelos y componentes de referencia para comparar autonomía, motor y uso recomendado</p>
+                </div>
+                <div class="static-product-list">
+                    <article class="static-product">
+                        <h3>Specialized Turbo Levo Gen 4</h3>
+                        <p>E-bike de montaña full suspension con motor Brose 3.1, batería 700Wh y torque de 90Nm para rutas técnicas.</p>
+                        <strong>Desde $8,500 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Trek Rail 9.9 XX1 AXS</h3>
+                        <p>Bicicleta eléctrica de montaña premium con motor Bosch CX, batería 750Wh y suspensión de alto rendimiento.</p>
+                        <strong>Desde $12,500 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Specialized Turbo Vado 5.0</h3>
+                        <p>Bicicleta eléctrica urbana con luces integradas, portabultos, guardabarros y asistencia cómoda para uso diario.</p>
+                        <strong>Desde $3,800 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Trek Allant+ 7</h3>
+                        <p>E-bike urbana robusta para trayectos largos, con motor Bosch Performance Line CX y batería de 500Wh.</p>
+                        <strong>Desde $3,200 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Cannondale Topstone Neo Lefty 3</h3>
+                        <p>Gravel eléctrica versátil para asfalto y tierra, con asistencia Bosch y geometría cómoda para aventuras largas.</p>
+                        <strong>Desde $4,500 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Cube Kathmandu Hybrid EXC</h3>
+                        <p>Bicicleta eléctrica trekking equipada para ciudad, viajes y recorridos mixtos con autonomía confiable.</p>
+                        <strong>Desde $2,800 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Bosch Performance Line CX Gen 5</h3>
+                        <p>Motor para bicicleta eléctrica con 85Nm de torque, respuesta potente y alta eficiencia para montaña.</p>
+                        <strong>Desde $1,200 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Bosch PowerTube 750</h3>
+                        <p>Batería integrada de alta capacidad para e-bikes, pensada para jornadas largas y rutas con desnivel.</p>
+                        <strong>Desde $800 MXN</strong>
+                    </article>
+                    <article class="static-product">
+                        <h3>Abus Bordo Alarm 6000A</h3>
+                        <p>Candado plegable con alarma para proteger bicicletas eléctricas urbanas, de trekking y de montaña.</p>
+                        <strong>Desde $180 MXN</strong>
+                    </article>
+                </div>
+            </div>
         </div>
     </section>
 
