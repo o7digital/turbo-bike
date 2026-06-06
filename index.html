@@ -100,6 +100,7 @@
             color: var(--text);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         @keyframes slideUp {
@@ -170,6 +171,29 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
         }
 
         nav a {
@@ -1507,6 +1531,60 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            header {
+                padding: 0.8rem 0;
+            }
+
+            .header-content {
+                display: grid;
+                grid-template-columns: 1fr auto auto;
+                gap: 0.75rem;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.45rem;
+                min-width: 0;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+            }
+
+            nav {
+                grid-column: 1 / -1;
+                width: 100%;
+                display: none;
+            }
+
+            nav.open {
+                display: block;
+            }
+
+            nav ul {
+                display: grid;
+                gap: 0;
+                width: 100%;
+                padding: 0.5rem 0 0.25rem;
+            }
+
+            nav li {
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+            }
+
+            nav a {
+                display: block;
+                padding: 0.85rem 0;
+            }
+
+            nav a::after {
+                display: none;
+            }
+
             .hero {
                 min-height: 78vh;
             }
@@ -1569,11 +1647,6 @@
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
-            }
-
-            nav ul {
-                gap: 1rem;
-                font-size: 0.9rem;
             }
 
             .filters {
@@ -1687,7 +1760,12 @@
                 <div class="logo">
                     ⚡ <span>Diverti</span>Bici
                 </div>
-                <nav>
+                <button class="menu-toggle" type="button" onclick="window.turboBikeApp.toggleMobileMenu()" aria-label="Abrir menú" aria-controls="mainNav" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav id="mainNav">
                     <ul>
                         <li><a href="#inicio" onclick="window.turboBikeApp.scrollToSection('inicio'); return false;">Inicio</a></li>
                         <li><a href="/about/">Quiénes somos</a></li>
@@ -2063,6 +2141,9 @@
                         <a class="footer-link" href="#accesorios" onclick="window.turboBikeApp.scrollToSection('accesorios'); return false;">Accesorios</a>
                         <a class="footer-link" href="#guia-bicicletas-electricas" onclick="window.turboBikeApp.scrollToSection('guia-bicicletas-electricas'); return false;">Guía de compra</a>
                         <a class="footer-link" href="/about/">Quiénes somos</a>
+                        <a class="footer-link" href="/bicicletas-electricas/">Bicicletas eléctricas</a>
+                        <a class="footer-link" href="/bicicletas-electricas-urbanas/">E-bikes urbanas</a>
+                        <a class="footer-link" href="/bicicletas-electricas-montana/">E-bikes de montaña</a>
                     </div>
                 </div>
 
@@ -2072,6 +2153,8 @@
                         <span class="footer-note">Pago seguro con PayPal, OXXO Pay o transferencia bancaria.</span>
                         <span class="footer-note">Precios sincronizados con WordPress / WooCommerce.</span>
                         <a class="footer-link" href="#catalogo" onclick="window.turboBikeApp.scrollToSection('catalogo'); return false;">Ver bicicletas disponibles</a>
+                        <a class="footer-link" href="/motores-bicicletas-electricas/">Motores para e-bike</a>
+                        <a class="footer-link" href="/baterias-bicicletas-electricas/">Baterías para e-bike</a>
                     </div>
                 </div>
             </div>
@@ -3268,6 +3351,10 @@
                                         src="${productImage}"
                                         alt="${productName}"
                                         class="product-image"
+                                        width="640"
+                                        height="480"
+                                        loading="lazy"
+                                        decoding="async"
                                         onerror="window.turboBikeApp.replaceImageWithFallback(this, '🚲')"
                                     >
                                 </div>
@@ -3305,6 +3392,10 @@
                                         src="${motor.image}"
                                         alt="${motor.name}"
                                         class="component-image"
+                                        width="480"
+                                        height="360"
+                                        loading="lazy"
+                                        decoding="async"
                                         onerror="window.turboBikeApp.replaceImageWithFallback(this, '⚡')"
                                     >
                                 </div>
@@ -3338,6 +3429,10 @@
                                         src="${bateria.image}"
                                         alt="${bateria.name}"
                                         class="component-image"
+                                        width="480"
+                                        height="360"
+                                        loading="lazy"
+                                        decoding="async"
                                         onerror="window.turboBikeApp.replaceImageWithFallback(this, '🔋')"
                                     >
                                 </div>
@@ -3371,6 +3466,10 @@
                                         src="${accesorio.image}"
                                         alt="${accesorio.name}"
                                         class="component-image"
+                                        width="480"
+                                        height="360"
+                                        loading="lazy"
+                                        decoding="async"
                                         onerror="window.turboBikeApp.replaceImageWithFallback(this, '🛠️')"
                                     >
                                 </div>
@@ -3393,6 +3492,34 @@
 
                 function filterProducts() {
                     renderProducts();
+                }
+
+                function toggleMobileMenu(forceOpen) {
+                    const nav = document.getElementById('mainNav');
+                    const button = document.querySelector('.menu-toggle');
+
+                    if (!nav || !button) {
+                        return;
+                    }
+
+                    const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !nav.classList.contains('open');
+                    nav.classList.toggle('open', shouldOpen);
+                    button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+                    button.setAttribute('aria-label', shouldOpen ? 'Cerrar menú' : 'Abrir menú');
+                }
+
+                function initMobileMenu() {
+                    const nav = document.getElementById('mainNav');
+
+                    if (!nav) {
+                        return;
+                    }
+
+                    nav.querySelectorAll('a').forEach(function(link) {
+                        link.addEventListener('click', function() {
+                            toggleMobileMenu(false);
+                        });
+                    });
                 }
 
                 function updateQuoteUi() {
@@ -3890,6 +4017,7 @@
                     elements.paymentForm = document.getElementById('paymentForm');
                     elements.toast = document.getElementById('toast');
 
+                    initMobileMenu();
                     initHeroSlider();
                     populateProductFilters(inventory);
                     renderMotores();
@@ -3906,6 +4034,7 @@
                     scrollToSection: scrollToSection,
                     filterProducts: filterProducts,
                     clearFilters: clearFilters,
+                    toggleMobileMenu: toggleMobileMenu,
                     applyQuote: applyQuote,
                     applyQuoteAndScroll: applyQuoteAndScroll,
                     addToCart: addToCart,
